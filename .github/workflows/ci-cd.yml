@@ -87,7 +87,7 @@ jobs:
         run: flake8 .
 
       - name: Run Black (Check Formatting)
-        run: black --check .
+        run: black --check --line-length 120 --target-version py311 .
 
   build:
     runs-on: ubuntu-latest
