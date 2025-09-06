@@ -14,48 +14,48 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
-    
+
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
-    
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '18'
         cache: 'npm'
         cache-dependency-path: 'src/frontend/package-lock.json'
-    
+
     - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    
+
     - name: Install frontend dependencies
       run: npm install
       working-directory: src/frontend
-    
+
     - name: Run tests
       run: |
         python tests/run_all_tests.py
-    
+
     - name: Build frontend
       run: |
         cd src/frontend
         npm run build
-    
+
     - name: Build Docker images
       run: |
         docker build -f docker/Dockerfile.backend -t luminis-backend:${{ github.ref_name }} .
         docker build -f docker/Dockerfile.frontend -t luminis-frontend:${{ github.ref_name }} .
-    
+
     - name: Extract version
       id: version
       run: |
@@ -64,29 +64,31 @@ jobs:
         else
           echo "version=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
         fi
-    
+
     - name: Generate release notes
       run: |
         python scripts/release.py --version ${{ steps.version.outputs.version }} --notes
-    
+
     - name: Create Release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: softprops/action-gh-release@v2
       with:
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ steps.version.outputs.version }}
+        name: Release v${{ steps.version.outputs.version }}
         body_path: RELEASE_NOTES_v${{ steps.version.outputs.version }}.md
         draft: false
         prerelease: false
-    
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Upload Docker images
       run: |
         echo "Docker images built successfully:"
         echo "- luminis-backend:${{ steps.version.outputs.version }}"
         echo "- luminis-frontend:${{ steps.version.outputs.version }}"
         echo "Images are ready for deployment to container registry"
-    
-    - name: Cleanup
+
+    - name: Release Summary
       run: |
-        rm -f RELEASE_NOTES_v*.md
+        echo "✅ Release v${{ steps.version.outputs.version }} created successfully!"
+        echo "🔗 Check: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.version.outputs.version }}"
