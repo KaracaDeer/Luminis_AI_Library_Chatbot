@@ -1,6 +1,6 @@
 """
 Simple FastAPI app for Render deployment
-Minimal dependencies, maximum compatibility
+Minimal dependencies, maximum compatibility - no pydantic
 """
 
 from fastapi import FastAPI
