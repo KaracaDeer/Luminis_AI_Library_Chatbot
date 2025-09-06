@@ -81,7 +81,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install linters
-        run: pip install flake8 black
+        run: pip install flake8 black==23.12.1
 
       - name: Run Flake8
         run: flake8 .
