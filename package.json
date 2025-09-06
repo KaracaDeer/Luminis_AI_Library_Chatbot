@@ -1,0 +1,61 @@
+{
+  "name": "luminis-ai-library-assistant",
+  "private": true,
+  "version": "1.0.2",
+  "description": "AI-powered library assistant with multilingual support",
+  "author": "Luminis.AI",
+  "license": "MIT",
+  "homepage": "https://github.com/KaracaDeer/Luminis_AI_Library_Chatbot",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KaracaDeer/Luminis_AI_Library_Chatbot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KaracaDeer/Luminis_AI_Library_Chatbot/issues"
+  },
+  "keywords": [
+    "ai",
+    "library",
+    "assistant",
+    "openai",
+    "whisper",
+    "react",
+    "typescript"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "python -m uvicorn src.backend.main_minimal:app --reload --port 8000 --host 0.0.0.0",
+    "client": "cd src/frontend && vite --host 0.0.0.0 --port 5173",
+    "build": "cd src/frontend && tsc && vite build",
+    "preview": "cd src/frontend && vite preview",
+    "install-deps": "npm install && pip install -r src/backend/requirements.txt",
+    "start": "python -m uvicorn src.backend.main_minimal:app --reload --port 8000 --host 0.0.0.0",
+    "db:init": "python src/database/init_database.py",
+    "db:reset": "python src/database/init_database.py --reset",
+    "test": "python tests/run_all_tests.py"
+  },
+  "dependencies": {
+    "@types/node": "^20.10.5",
+    "axios": "^1.6.2",
+    "framer-motion": "^10.16.16",
+    "gsap": "^3.13.0",
+    "lucide-react": "^0.294.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
+    "react-router-dom": "^6.20.1",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8"
+  }
+}

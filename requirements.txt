@@ -1,0 +1,11 @@
+## Root requirements for CI
+# Explicit entries required by CI checks
+fastapi
+uvicorn
+sqlalchemy
+openai
+python-dotenv
+
+# Delegate to backend requirements
+-r src/backend/requirements.txt
+

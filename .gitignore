@@ -1,0 +1,110 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.log
+.git
+.mypy_cache
+.pytest_cache/
+.hypothesis
+
+# Database files
+*.db
+*.sqlite3
+chroma_db/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Frontend build
+/src/frontend/dist/
+/src/frontend/build/
+
+# TypeScript compiled files
+*.d.ts
+*.d.ts.map
+*.js.map
+*.js
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Lock files (keep package-lock.json, remove others)
+yarn.lock
+pnpm-lock.yaml
+
+# Test reports and artifacts
+bandit-report.json
+safety-report.json
+results.xml
+coverage.xml
+*.xml
+
+# Release notes (temporary files)
+RELEASE_NOTES_v*.md
+
+# Test files
+test.txt
+*.test
+*.spec
+
+# Database directories
+luminis_library.db/
+
+# Coverage files
+.coverage
+
+# Docker ignore files (keep .dockerignore)
+.dockerignore.bak
+
+# Pre-commit cache
+.pre-commit-cache/

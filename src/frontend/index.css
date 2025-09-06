@@ -1,0 +1,650 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  font-family: "Libertinus Sans", system-ui, sans-serif;
+  background-color: transparent;
+  overflow-x: hidden;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+#root {
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  font-family: "Libertinus Sans", system-ui, sans-serif;
+}
+
+button:focus {
+  outline: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Libertinus Sans", system-ui, sans-serif;
+}
+
+/* ===== ETKİLEŞİM STİLLERİ ===== */
+/* Tüm etkileşimli elementler için varsayılan stil (hover efektleri ile etkileşim hissi verilir) */
+button, a, .btn-primary, .btn-secondary, .btn-outline, .link-style,
+.card, .card-interactive, .menu-item, .nav-item, .icon, .icon-button,
+.input-field, .textarea-field, .tab, .tab-button, .modal-btn, .dialog-btn,
+.dropdown-item, .select-option, .toggle, .switch, .progress-bar, .tooltip-trigger,
+.accordion-header, .breadcrumb-item, .page-item, .page-link, .badge, .tag,
+.avatar, .profile-pic, .notification, .alert, .timeline-item, .sidebar-item,
+.sidebar-link, .header-nav-item, .footer-link, .social-icon, .loading-spinner,
+.chart-element, .graph-item, .map-marker, .video-control, .audio-control,
+.file-upload-area, .search-box, .filter-btn, .sort-btn, .export-btn, .import-btn,
+.print-btn, .share-btn, .bookmark-btn, .like-btn, .comment-btn, .settings-btn,
+.help-btn, .info-btn, .warning-btn, .error-btn, .success-btn {
+  /* Hover efektleri ile etkileşim hissi verilir */
+}
+
+/* Disabled elementler için özel stil */
+.disabled, [disabled] {
+  /* Devre dışı elementler için özel stil */
+}
+
+/* ===== HOVER EFFECTS FOR INTERACTIVE ELEMENTS ===== */
+
+/* Butonlar için hover efektleri */
+.btn-primary,
+.btn-secondary,
+.btn-outline {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-1px) scale(1.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Linkler için hover efektleri */
+a,
+.link-style {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+a:hover,
+.link-style:hover {
+  color: #007bff;
+  transform: translateY(-1px);
+}
+
+/* Link altı çizgi efekti */
+a::after,
+.link-style::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #007bff;
+  transition: width 0.3s ease;
+}
+
+a:hover::after,
+.link-style:hover::after {
+  width: 100%;
+}
+
+/* Kartlar için hover efektleri */
+.card,
+.card-interactive {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Hover efektleri ile etkileşim hissi verilir */
+}
+
+.card:hover,
+.card-interactive:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Menü öğeleri için hover efektleri */
+.menu-item,
+.nav-item {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.menu-item:hover,
+.nav-item:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: translateX(4px);
+}
+
+/* İkonlar için hover efektleri */
+.icon,
+.icon-button {
+  transition: all 0.2s ease;
+}
+
+.icon:hover,
+.icon-button:hover {
+  transform: scale(1.1);
+  color: #007bff;
+}
+
+/* Form elementleri için hover efektleri */
+.input-field,
+.textarea-field {
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.input-field:hover,
+.textarea-field:hover {
+  border-color: rgba(0, 123, 255, 0.3);
+  box-shadow: 0 2px 4px rgba(0, 123, 255, 0.1);
+}
+
+/* Tab'lar için hover efektleri */
+.tab,
+.tab-button {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.tab:hover,
+.tab-button:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Modal butonları için hover efektleri */
+.modal-btn,
+.dialog-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.modal-btn:hover,
+.dialog-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Dropdown menüler için hover efektleri */
+.dropdown-item,
+.select-option {
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover,
+.select-option:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: translateX(4px);
+}
+
+/* Toggle switch'ler için hover efektleri */
+.toggle,
+.switch {
+  transition: all 0.2s ease;
+}
+
+.toggle:hover,
+.switch:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Progress bar'lar için hover efektleri */
+.progress-bar {
+  transition: all 0.3s ease;
+}
+
+.progress-bar:hover {
+  transform: scaleY(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Tooltip'ler için hover efektleri */
+.tooltip-trigger {
+  transition: all 0.2s ease;
+}
+
+.tooltip-trigger:hover {
+  transform: scale(1.05);
+}
+
+/* Accordion başlıkları için hover efektleri */
+.accordion-header {
+  transition: all 0.2s ease;
+}
+
+.accordion-header:hover {
+  background-color: rgba(0, 123, 255, 0.05);
+  transform: translateX(2px);
+}
+
+/* Breadcrumb'lar için hover efektleri */
+.breadcrumb-item {
+  transition: all 0.2s ease;
+}
+
+.breadcrumb-item:hover {
+  color: #007bff;
+  transform: translateY(-1px);
+}
+
+/* Pagination için hover efektleri */
+.page-item,
+.page-link {
+  transition: all 0.2s ease;
+}
+
+.page-item:hover,
+.page-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* Badge'ler için hover efektleri */
+.badge,
+.tag {
+  transition: all 0.2s ease;
+}
+
+.badge:hover,
+.tag:hover {
+  transform: scale(1.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Avatar'lar için hover efektleri */
+.avatar,
+.profile-pic {
+  transition: all 0.3s ease;
+}
+
+.avatar:hover,
+.profile-pic:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Notification'lar için hover efektleri */
+.notification,
+.alert {
+  transition: all 0.2s ease;
+}
+
+.notification:hover,
+.alert:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Timeline öğeleri için hover efektleri */
+.timeline-item {
+  transition: all 0.3s ease;
+}
+
+.timeline-item:hover {
+  transform: translateX(4px);
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+/* Sidebar öğeleri için hover efektleri */
+.sidebar-item,
+.sidebar-link {
+  transition: all 0.2s ease;
+}
+
+.sidebar-item:hover,
+.sidebar-link:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: translateX(4px);
+  border-left: 3px solid #007bff;
+}
+
+/* Header menü öğeleri için hover efektleri */
+.header-nav-item {
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.header-nav-item:hover {
+  color: #007bff;
+  transform: translateY(-1px);
+}
+
+.header-nav-item::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background-color: #007bff;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.header-nav-item:hover::after {
+  width: 100%;
+}
+
+/* Footer linkleri için hover efektleri */
+.footer-link {
+  transition: all 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #007bff;
+  transform: translateY(-1px);
+}
+
+/* Social media ikonları için hover efektleri */
+.social-icon {
+  transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+  transform: scale(1.2) rotate(5deg);
+  color: #007bff;
+}
+
+/* Loading spinner'lar için hover efektleri */
+.loading-spinner {
+  transition: all 0.3s ease;
+}
+
+.loading-spinner:hover {
+  transform: scale(1.1);
+  animation-duration: 0.8s;
+}
+
+/* Chart elementleri için hover efektleri */
+.chart-element,
+.graph-item {
+  transition: all 0.2s ease;
+}
+
+.chart-element:hover,
+.graph-item:hover {
+  transform: scale(1.05);
+  opacity: 0.8;
+}
+
+/* Map marker'ları için hover efektleri */
+.map-marker {
+  transition: all 0.3s ease;
+}
+
+.map-marker:hover {
+  transform: scale(1.2);
+  z-index: 10;
+}
+
+/* Video player kontrolleri için hover efektleri */
+.video-control {
+  transition: all 0.2s ease;
+}
+
+.video-control:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Audio player kontrolleri için hover efektleri */
+.audio-control {
+  transition: all 0.2s ease;
+}
+
+.audio-control:hover {
+  transform: scale(1.1);
+  color: #007bff;
+}
+
+/* File upload alanları için hover efektleri */
+.file-upload-area {
+  transition: all 0.3s ease;
+  border: 2px dashed #ccc;
+}
+
+.file-upload-area:hover {
+  border-color: #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+  transform: scale(1.02);
+}
+
+/* Search box için hover efektleri */
+.search-box {
+  transition: all 0.2s ease;
+}
+
+.search-box:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Filter butonları için hover efektleri */
+.filter-btn {
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* Sort butonları için hover efektleri */
+.sort-btn {
+  transition: all 0.2s ease;
+}
+
+.sort-btn:hover {
+  background-color: rgba(0, 123, 255, 0.1);
+  transform: scale(1.05);
+}
+
+/* Export butonları için hover efektleri */
+.export-btn {
+  transition: all 0.3s ease;
+}
+
+.export-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Import butonları için hover efektleri */
+.import-btn {
+  transition: all 0.3s ease;
+}
+
+.import-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Print butonları için hover efektleri */
+.print-btn {
+  transition: all 0.2s ease;
+}
+
+.print-btn:hover {
+  transform: scale(1.05);
+  color: #007bff;
+}
+
+/* Share butonları için hover efektleri */
+.share-btn {
+  transition: all 0.3s ease;
+}
+
+.share-btn:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Bookmark butonları için hover efektleri */
+.bookmark-btn {
+  transition: all 0.2s ease;
+}
+
+.bookmark-btn:hover {
+  transform: scale(1.1);
+  color: #ffc107;
+}
+
+/* Like butonları için hover efektleri */
+.like-btn {
+  transition: all 0.2s ease;
+}
+
+.like-btn:hover {
+  transform: scale(1.1);
+  color: #dc3545;
+}
+
+/* Comment butonları için hover efektleri */
+.comment-btn {
+  transition: all 0.2s ease;
+}
+
+.comment-btn:hover {
+  transform: scale(1.1);
+  color: #007bff;
+}
+
+/* Settings butonları için hover efektleri */
+.settings-btn {
+  transition: all 0.2s ease;
+}
+
+.settings-btn:hover {
+  transform: rotate(90deg) scale(1.1);
+  color: #6c757d;
+}
+
+/* Help butonları için hover efektleri */
+.help-btn {
+  transition: all 0.2s ease;
+}
+
+.help-btn:hover {
+  transform: scale(1.1);
+  color: #28a745;
+}
+
+/* Info butonları için hover efektleri */
+.info-btn {
+  transition: all 0.2s ease;
+}
+
+.info-btn:hover {
+  transform: scale(1.1);
+  color: #17a2b8;
+}
+
+/* Warning butonları için hover efektleri */
+.warning-btn {
+  transition: all 0.2s ease;
+}
+
+.warning-btn:hover {
+  transform: scale(1.1);
+  color: #ffc107;
+}
+
+/* Error butonları için hover efektleri */
+.error-btn {
+  transition: all 0.2s ease;
+}
+
+.error-btn:hover {
+  transform: scale(1.1);
+  color: #dc3545;
+}
+
+/* Success butonları için hover efektleri */
+.success-btn {
+  transition: all 0.2s ease;
+}
+
+.success-btn:hover {
+  transform: scale(1.1);
+  color: #28a745;
+}
+
+/* Disabled elementler için hover efektleri (etkileşim yok) */
+.disabled,
+[disabled] {
+  opacity: 0.6;
+  pointer-events: none;
+  transition: none;
+}
+
+.disabled:hover,
+[disabled]:hover {
+  transform: none;
+  box-shadow: none;
+  background-color: inherit;
+}
+
+/* Focus durumları için ek efektler */
+.btn-primary:focus,
+.btn-secondary:focus,
+.btn-outline:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Active durumları için ek efektler */
+.btn-primary:active,
+.btn-secondary:active,
+.btn-outline:active {
+  transform: translateY(0) scale(0.98);
+  transition: all 0.1s ease;
+}
+
+/* Responsive hover efektleri */
+@media (max-width: 768px) {
+  .card:hover,
+  .card-interactive:hover {
+    transform: translateY(-2px) scale(1.005);
+  }
+  
+  .btn-primary:hover,
+  .btn-secondary:hover {
+    transform: translateY(-1px) scale(1.01);
+  }
+}
+
+/* Reduced motion kullanıcılar için */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+  
+  *:hover {
+    transform: none !important;
+  }
+}

@@ -1,0 +1,907 @@
+{
+	"info": {
+		"_postman_id": "luminis-ai-library-api",
+		"name": "Luminis.AI Library Assistant API",
+		"description": "Complete API collection for Luminis.AI Library Assistant - AI-powered library assistant with book recommendations, chat, and RAG capabilities",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "luminis-ai-library"
+	},
+	"item": [
+		{
+			"name": "Health & Status",
+			"item": [
+				{
+					"name": "Root Endpoint",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								""
+							]
+						},
+						"description": "Get basic API information"
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"health"
+							]
+						},
+						"description": "Check API health status"
+					},
+					"response": []
+				}
+			],
+			"description": "Health check and status endpoints"
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\",\n  \"full_name\": \"Test User\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/register",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user"
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"testuser\",\n  \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login user and get access token"
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"refresh_token\": \"{{refresh_token}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/refresh",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"refresh"
+							]
+						},
+						"description": "Refresh access token"
+					},
+					"response": []
+				},
+				{
+					"name": "Get OAuth URL",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/auth/oauth/google/url?state=test_state",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"oauth",
+								"google",
+								"url"
+							],
+							"query": [
+								{
+									"key": "state",
+									"value": "test_state"
+								}
+							]
+						},
+						"description": "Get OAuth authorization URL for Google"
+					},
+					"response": []
+				},
+				{
+					"name": "OAuth Callback",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"code\": \"oauth_code\",\n  \"state\": \"test_state\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/oauth/google/callback",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"oauth",
+								"google",
+								"callback"
+							]
+						},
+						"description": "Handle OAuth callback"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Get current user profile (requires authentication)"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"full_name\": \"Updated Name\",\n  \"email\": \"updated@example.com\",\n  \"preferences\": {\n    \"language\": \"en\",\n    \"genre_preferences\": [\"fiction\", \"science\"]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/auth/profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"profile"
+							]
+						},
+						"description": "Update user profile (requires authentication)"
+					},
+					"response": []
+				},
+				{
+					"name": "Logout User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/api/auth/logout",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout user (requires authentication)"
+					},
+					"response": []
+				}
+			],
+			"description": "User authentication and profile management endpoints"
+		},
+		{
+			"name": "Chat & AI",
+			"item": [
+				{
+					"name": "Chat with AI",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Can you recommend me some good science fiction books?\",\n  \"language\": \"en\",\n  \"context\": \"I'm looking for books similar to Dune and Foundation series\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"chat"
+							]
+						},
+						"description": "Chat with AI library assistant"
+					},
+					"response": []
+				},
+				{
+					"name": "Transcribe Audio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/api/transcribe",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"transcribe"
+							]
+						},
+						"description": "Convert audio file to text"
+					},
+					"response": []
+				}
+			],
+			"description": "AI chat and audio transcription endpoints"
+		},
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books"
+							]
+						},
+						"description": "Get all available books"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Random Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books/random",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"random"
+							]
+						},
+						"description": "Get random book recommendations"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Top Rated Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books/top-rated",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"top-rated"
+							]
+						},
+						"description": "Get top rated books"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Books by Genre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/books/genre/science-fiction",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"books",
+								"genre",
+								"science-fiction"
+							]
+						},
+						"description": "Get books by specific genre"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Book Recommendations",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_message\": \"I love fantasy and adventure books\",\n  \"language\": \"en\",\n  \"preferences\": {\n    \"genres\": [\"fantasy\", \"adventure\"],\n    \"authors\": [\"J.R.R. Tolkien\", \"George R.R. Martin\"]\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/book-recommendations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"book-recommendations"
+							]
+						},
+						"description": "Get personalized book recommendations"
+					},
+					"response": []
+				},
+				{
+					"name": "Analyze Reading Preferences",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"books_read\": [\n    {\n      \"title\": \"Dune\",\n      \"author\": \"Frank Herbert\",\n      \"rating\": 5,\n      \"genre\": \"science-fiction\"\n    },\n    {\n      \"title\": \"Foundation\",\n      \"author\": \"Isaac Asimov\",\n      \"rating\": 4,\n      \"genre\": \"science-fiction\"\n    }\n  ],\n  \"language\": \"en\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/analyze-reading",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"analyze-reading"
+							]
+						},
+						"description": "Analyze user's reading preferences based on books read"
+					},
+					"response": []
+				}
+			],
+			"description": "Book-related endpoints for browsing and recommendations"
+		},
+		{
+			"name": "Open Library Integration",
+			"item": [
+				{
+					"name": "Search Open Library Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/openlibrary/search?query=science fiction&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"openlibrary",
+								"search"
+							],
+							"query": [
+								{
+									"key": "query",
+									"value": "science fiction"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search books in Open Library"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Popular Open Library Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/openlibrary/popular?limit=20",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"openlibrary",
+								"popular"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20"
+								}
+							]
+						},
+						"description": "Get popular books from Open Library"
+					},
+					"response": []
+				},
+				{
+					"name": "Sync Open Library Books",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"genres\": [\"science-fiction\", \"fantasy\"],\n  \"limit\": 50\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/openlibrary/sync",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"openlibrary",
+								"sync"
+							]
+						},
+						"description": "Sync books from Open Library to local database"
+					},
+					"response": []
+				},
+				{
+					"name": "Check Open Library Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/openlibrary/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"openlibrary",
+								"health"
+							]
+						},
+						"description": "Check Open Library service health"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Available Genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/openlibrary/genres",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"openlibrary",
+								"genres"
+							]
+						},
+						"description": "Get available book genres from Open Library"
+					},
+					"response": []
+				}
+			],
+			"description": "Open Library integration endpoints"
+		},
+		{
+			"name": "RAG (Retrieval-Augmented Generation)",
+			"item": [
+				{
+					"name": "RAG Chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"What are the main themes in classic science fiction literature?\",\n  \"language\": \"en\",\n  \"context\": \"I'm studying literature and need to understand sci-fi themes\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rag/chat",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rag",
+								"chat"
+							]
+						},
+						"description": "Chat with RAG-powered AI assistant"
+					},
+					"response": []
+				},
+				{
+					"name": "RAG Recommendations",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"user_message\": \"I want to read books about artificial intelligence and its impact on society\",\n  \"language\": \"en\",\n  \"preferences\": {\n    \"genres\": [\"science-fiction\", \"non-fiction\"],\n    \"complexity\": \"intermediate\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/rag/recommendations",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rag",
+								"recommendations"
+							]
+						},
+						"description": "Get RAG-powered book recommendations"
+					},
+					"response": []
+				},
+				{
+					"name": "RAG Search Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/rag/search?q=artificial intelligence&limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"rag",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "artificial intelligence"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Search books using RAG"
+					},
+					"response": []
+				}
+			],
+			"description": "RAG-powered endpoints for enhanced AI capabilities"
+		},
+		{
+			"name": "Vector Search",
+			"item": [
+				{
+					"name": "Vector Search Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vector/search?q=space exploration&limit=10&threshold=0.7",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vector",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "space exploration"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "threshold",
+									"value": "0.7"
+								}
+							]
+						},
+						"description": "Search books using vector similarity"
+					},
+					"response": []
+				},
+				{
+					"name": "Find Similar Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vector/similar/Dune?limit=5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vector",
+								"similar",
+								"Dune"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
+						},
+						"description": "Find books similar to a specific book"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Category Recommendations",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vector/category/science-fiction?limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vector",
+								"category",
+								"science-fiction"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get book recommendations by category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Author Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vector/author/Frank Herbert?limit=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vector",
+								"author",
+								"Frank Herbert"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get books by specific author"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Vector Store",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vector/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vector",
+								"update"
+							]
+						},
+						"description": "Update the vector store with latest data"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Vector Stats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/vector/stats",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"api",
+								"vector",
+								"stats"
+							]
+						},
+						"description": "Get vector store statistics"
+					},
+					"response": []
+				}
+			],
+			"description": "Vector-based semantic search and similarity endpoints"
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8000",
+			"type": "string"
+		}
+	]
+}
