@@ -2,6 +2,7 @@
 Vector Database Service for Luminis.AI Library Assistant
 ======================================================
 
+
 This service provides advanced vector database operations for semantic search and
 similarity matching in the Luminis.AI Library Assistant. It leverages ChromaDB and
 OpenAI embeddings to enable intelligent book discovery and recommendation systems.

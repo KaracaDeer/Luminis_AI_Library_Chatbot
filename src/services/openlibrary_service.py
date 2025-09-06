@@ -1,6 +1,7 @@
 """
 Open Library API Service
 
+
 This service fetches book data from the Open Library API and integrates it with our local database.
 It provides functions to search books, fetch book details, and sync data.
 """
