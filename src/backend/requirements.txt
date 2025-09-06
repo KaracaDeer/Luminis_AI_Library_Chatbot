@@ -1,8 +1,7 @@
-# Core FastAPI dependencies
+# Core FastAPI dependencies - Render compatible versions
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
-pydantic==2.4.2
-pydantic-core==2.10.1
+pydantic==2.3.0
 
 # OpenAI and AI
 openai>=1.6.1,<2.0.0
@@ -16,10 +15,10 @@ python-multipart==0.0.6
 sqlalchemy==2.0.23
 alembic==1.13.1
 
-# LangChain and Vector DB (simplified for Render)
+# LangChain and Vector DB (disabled for Render deployment)
 # langchain==0.1.0
 # langchain-openai==0.0.2
 # chromadb==0.4.22
 
-# Code formatting (optional for production)
+# Code formatting (disabled for production)
 # black==23.12.1
