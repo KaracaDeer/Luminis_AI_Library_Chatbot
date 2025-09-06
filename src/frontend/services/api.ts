@@ -1,7 +1,7 @@
 // API URL configuration for different environments
 const API_BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
-  : '/api';
+  : 'https://luminis-backend.onrender.com/api';
 
 export interface ChatMessage {
   message: string;
