@@ -34,7 +34,9 @@ def debug_audio_transcription():
             else:
                 files = {"file": (audio_file, open(audio_file, "rb"))}
 
-            response = requests.post("http://localhost:8000/api/transcribe", files=files)
+            response = requests.post(
+                "http://localhost:8000/api/transcribe", files=files
+            )
 
             print(f"Status: {response.status_code}")
             print(f"Response: {response.text}")

@@ -31,7 +31,10 @@ def test_openlibrary_search():
     print("\n🔍 Testing Open Library book search...")
 
     try:
-        response = requests.get(f"{BASE_URL}/api/openlibrary/search", params={"query": "harry potter", "limit": 5})
+        response = requests.get(
+            f"{BASE_URL}/api/openlibrary/search",
+            params={"query": "harry potter", "limit": 5},
+        )
         print(f"Status: {response.status_code}")
         data = response.json()
         print(f"Found {data.get('count', 0)} books")
@@ -47,7 +50,9 @@ def test_openlibrary_popular():
     print("\n🔍 Testing Open Library popular books...")
 
     try:
-        response = requests.get(f"{BASE_URL}/api/openlibrary/popular", params={"limit": 10})
+        response = requests.get(
+            f"{BASE_URL}/api/openlibrary/popular", params={"limit": 10}
+        )
         print(f"Status: {response.status_code}")
         data = response.json()
         print(f"Found {data.get('count', 0)} popular books")

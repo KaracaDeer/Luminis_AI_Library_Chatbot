@@ -38,7 +38,11 @@ class LuminisChatClient:
         """
         url = f"{self.base_url}/api/chat"
 
-        payload = {"message": message, "user_id": user_id, "chat_history": self.chat_history}
+        payload = {
+            "message": message,
+            "user_id": user_id,
+            "chat_history": self.chat_history,
+        }
 
         headers = {"Content-Type": "application/json"}
 
@@ -49,9 +53,15 @@ class LuminisChatClient:
             result = response.json()
 
             # Store in chat history
-            self.chat_history.append({"role": "user", "content": message, "timestamp": time.time()})
             self.chat_history.append(
-                {"role": "assistant", "content": result.get("response", ""), "timestamp": time.time()}
+                {"role": "user", "content": message, "timestamp": time.time()}
+            )
+            self.chat_history.append(
+                {
+                    "role": "assistant",
+                    "content": result.get("response", ""),
+                    "timestamp": time.time(),
+                }
             )
 
             return result
@@ -93,7 +103,9 @@ def main():
 
     print("✅ Backend API is available!")
     print("\n💬 Starting chat session...")
-    print("Type 'quit' to exit, 'clear' to clear history, 'history' to see chat history")
+    print(
+        "Type 'quit' to exit, 'clear' to clear history, 'history' to see chat history"
+    )
     print("-" * 60)
 
     while True:
@@ -101,16 +113,16 @@ def main():
             # Get user input
             user_input = input("\n👤 You: ").strip()
 
-            if user_input.lower() == 'quit':
+            if user_input.lower() == "quit":
                 print("👋 Goodbye!")
                 break
 
-            elif user_input.lower() == 'clear':
+            elif user_input.lower() == "clear":
                 client.clear_history()
                 print("🧹 Chat history cleared!")
                 continue
 
-            elif user_input.lower() == 'history':
+            elif user_input.lower() == "history":
                 history = client.get_chat_history()
                 if not history:
                     print("📝 No chat history yet.")
@@ -159,9 +171,14 @@ def example_requests():
     # Example 2: Send a chat message
     print("\n2. Chat Message:")
     try:
-        payload = {"message": "Hello! Can you recommend a good book about Python programming?", "chat_history": []}
+        payload = {
+            "message": "Hello! Can you recommend a good book about Python programming?",
+            "chat_history": [],
+        }
         response = requests.post(
-            "http://localhost:8000/api/chat", json=payload, headers={"Content-Type": "application/json"}
+            "http://localhost:8000/api/chat",
+            json=payload,
+            headers={"Content-Type": "application/json"},
         )
         print(f"   Status: {response.status_code}")
         result = response.json()

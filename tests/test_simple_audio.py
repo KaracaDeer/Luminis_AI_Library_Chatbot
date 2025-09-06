@@ -19,7 +19,9 @@ def test_audio_transcription():
 
         with open("test.txt", "rb") as f:
             files = {"file": ("test.txt", f, "text/plain")}
-            response = requests.post("http://localhost:8000/api/transcribe", files=files)
+            response = requests.post(
+                "http://localhost:8000/api/transcribe", files=files
+            )
 
         print(f"Text file test - Status: {response.status_code}")
         print(f"Response: {response.text}")
@@ -35,7 +37,9 @@ def test_audio_transcription():
         # Test with audio file
         with open("test_speech.wav", "rb") as f:
             files = {"file": ("test_speech.wav", f, "audio/wav")}
-            response = requests.post("http://localhost:8000/api/transcribe", files=files)
+            response = requests.post(
+                "http://localhost:8000/api/transcribe", files=files
+            )
 
         print(f"Audio file test - Status: {response.status_code}")
         print(f"Response: {response.text}")

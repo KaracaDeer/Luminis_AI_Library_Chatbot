@@ -1,22 +1,5 @@
-[tool.black]
-line-length = 120
-target-version = ['py311']
-skip-string-normalization = true
-skip-magic-trailing-comma = true
-force-exclude = '''
-(
-  /(
-      \.eggs
-    | \.git
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | node_modules
-  )/
-)
-'''
+# [tool.black] - Disabled to match GitHub Actions defaults
+# line-length = 120
+# target-version = ['py311']
+# skip-string-normalization = true
+# skip-magic-trailing-comma = true

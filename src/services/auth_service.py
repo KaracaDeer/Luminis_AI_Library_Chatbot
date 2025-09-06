@@ -73,7 +73,9 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # OAuth 2.0 configuration
 OAUTH2_CLIENT_ID = os.getenv("OAUTH2_CLIENT_ID")
 OAUTH2_CLIENT_SECRET = os.getenv("OAUTH2_CLIENT_SECRET")
-OAUTH2_REDIRECT_URI = os.getenv("OAUTH2_REDIRECT_URI", "http://localhost:5173/auth/callback")
+OAUTH2_REDIRECT_URI = os.getenv(
+    "OAUTH2_REDIRECT_URI", "http://localhost:5173/auth/callback"
+)
 
 # Supported OAuth providers
 OAUTH_PROVIDERS = {
@@ -115,13 +117,17 @@ class AuthService:
         """Hash a password"""
         return pwd_context.hash(password)
 
-    def create_access_token(self, data: dict, expires_delta: Optional[timedelta] = None) -> str:
+    def create_access_token(
+        self, data: dict, expires_delta: Optional[timedelta] = None
+    ) -> str:
         """Create a JWT access token"""
         to_encode = data.copy()
         if expires_delta:
             expire = datetime.utcnow() + expires_delta
         else:
-            expire = datetime.utcnow() + timedelta(minutes=self.access_token_expire_minutes)
+            expire = datetime.utcnow() + timedelta(
+                minutes=self.access_token_expire_minutes
+            )
 
         to_encode.update({"exp": expire, "type": "access"})
         encoded_jwt = jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
@@ -147,7 +153,9 @@ class AuthService:
                 headers={"WWW-Authenticate": "Bearer"},
             )
 
-    def authenticate_user(self, db: Session, email: str, password: str) -> Optional[User]:
+    def authenticate_user(
+        self, db: Session, email: str, password: str
+    ) -> Optional[User]:
         """Authenticate a user with email and password"""
         user = db.query(User).filter(User.email == email).first()
         if not user:
@@ -181,7 +189,9 @@ class AuthService:
         payload = self.verify_token(refresh_token)
         token_type = payload.get("type")
         if token_type != "refresh":
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token type")
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token type"
+            )
 
         user_id = payload.get("sub")
         return self.create_access_token(data={"sub": user_id})
@@ -191,7 +201,11 @@ class AuthService:
         access_token = self.create_access_token(data={"sub": str(user.id)})
         refresh_token = self.create_refresh_token(data={"sub": str(user.id)})
 
-        return {"access_token": access_token, "refresh_token": refresh_token, "token_type": "bearer"}
+        return {
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+            "token_type": "bearer",
+        }
 
 
 class OAuth2Service:
@@ -222,7 +236,9 @@ class OAuth2Service:
         query_string = "&".join([f"{k}={v}" for k, v in params.items()])
         return f"{provider_config['auth_url']}?{query_string}"
 
-    def exchange_code_for_token(self, provider: str, authorization_code: str) -> Dict[str, Any]:
+    def exchange_code_for_token(
+        self, provider: str, authorization_code: str
+    ) -> Dict[str, Any]:
         """Exchange authorization code for access token"""
         if provider not in OAUTH_PROVIDERS:
             raise ValueError(f"Unsupported OAuth provider: {provider}")
@@ -264,7 +280,8 @@ security = HTTPBearer()
 
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security), db: Session = Depends(get_db)
+    credentials: HTTPAuthorizationCredentials = Depends(security),
+    db: Session = Depends(get_db),
 ) -> User:
     """Dependency to get current authenticated user"""
     return auth_service.get_current_user(db, credentials.credentials)

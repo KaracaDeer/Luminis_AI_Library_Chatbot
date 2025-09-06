@@ -40,7 +40,9 @@ def test_audio_transcription():
 
         with open("test.txt", "rb") as f:
             files = {"file": ("test.txt", f, "text/plain")}
-            response = requests.post("http://localhost:8000/api/transcribe", files=files)
+            response = requests.post(
+                "http://localhost:8000/api/transcribe", files=files
+            )
 
         print(f"POST with text file status: {response.status_code}")
         print(f"Response: {response.text}")

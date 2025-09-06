@@ -296,7 +296,9 @@ class OpenLibraryService:
             "errors": errors,
         }
 
-    def _convert_to_db_format(self, book_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def _convert_to_db_format(
+        self, book_data: Dict[str, Any]
+    ) -> Optional[Dict[str, Any]]:
         """Convert Open Library book data to our database format"""
         try:
             # Extract author name
@@ -310,7 +312,11 @@ class OpenLibraryService:
             # Extract description
             description = book_data.get("description", "")
             if not description and book_data.get("first_sentence"):
-                description = book_data["first_sentence"][0] if book_data["first_sentence"] else "Açıklama mevcut değil"
+                description = (
+                    book_data["first_sentence"][0]
+                    if book_data["first_sentence"]
+                    else "Açıklama mevcut değil"
+                )
 
             # Extract year
             year = book_data.get("first_publish_date")
@@ -387,7 +393,9 @@ class OpenLibraryService:
     def health_check(self) -> Dict[str, Any]:
         """Check if Open Library API is accessible"""
         try:
-            response = requests.get(f"{self.base_url}/search.json?q=test&limit=1", timeout=5)
+            response = requests.get(
+                f"{self.base_url}/search.json?q=test&limit=1", timeout=5
+            )
             return {
                 "status": "healthy",
                 "response_time": response.elapsed.total_seconds(),

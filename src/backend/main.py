@@ -77,7 +77,9 @@ except ImportError:
             # Fallback 2: Import using importlib
             import importlib.util
 
-            spec = importlib.util.spec_from_file_location("database", os.path.join(_DATABASE_DIR, "database.py"))
+            spec = importlib.util.spec_from_file_location(
+                "database", os.path.join(_DATABASE_DIR, "database.py")
+            )
             database_module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(database_module)
             User = database_module.User
@@ -138,7 +140,12 @@ except Exception as e:
 
 # Import authentication services
 try:
-    from services.auth_service import auth_service, oauth2_service, get_current_user, get_current_active_user
+    from services.auth_service import (
+        auth_service,
+        oauth2_service,
+        get_current_user,
+        get_current_active_user,
+    )
 
     print("Authentication services imported successfully")
 except Exception as e:
@@ -649,7 +656,9 @@ def get_mock_response(user_message: str, user_language: str = "tr") -> str:
     # Try to use enhanced response manager if available
     if response_manager:
         try:
-            enhanced_response = response_manager.get_contextual_response(user_message, user_language)
+            enhanced_response = response_manager.get_contextual_response(
+                user_message, user_language
+            )
             if enhanced_response:
                 return enhanced_response
         except Exception as e:
@@ -728,18 +737,84 @@ def get_mock_response(user_message: str, user_language: str = "tr") -> str:
     # Enhanced topic detection with more keywords
     topic_patterns = {
         "roman": ["roman", "novel", "fiction", "hikaye", "story"],
-        "bilim kurgu": ["bilim kurgu", "science fiction", "sci-fi", "uzay", "space", "gelecek", "future"],
-        "fantastik": ["fantastik", "fantasy", "büyü", "magic", "sihir", "elf", "dragon"],
+        "bilim kurgu": [
+            "bilim kurgu",
+            "science fiction",
+            "sci-fi",
+            "uzay",
+            "space",
+            "gelecek",
+            "future",
+        ],
+        "fantastik": [
+            "fantastik",
+            "fantasy",
+            "büyü",
+            "magic",
+            "sihir",
+            "elf",
+            "dragon",
+        ],
         "klasik": ["klasik", "classic", "eski", "old", "geleneksel", "traditional"],
-        "polisiye": ["polisiye", "detective", "cinayet", "murder", "gizem", "mystery", "dedektif"],
+        "polisiye": [
+            "polisiye",
+            "detective",
+            "cinayet",
+            "murder",
+            "gizem",
+            "mystery",
+            "dedektif",
+        ],
         "tarih": ["tarih", "history", "historical", "geçmiş", "past", "savaş", "war"],
         "felsefe": ["felsefe", "philosophy", "düşünce", "thought", "mantık", "logic"],
-        "psikoloji": ["psikoloji", "psychology", "ruh", "soul", "karakter", "character", "davranış", "behavior"],
-        "teknoloji": ["teknoloji", "technology", "tech", "dijital", "digital", "yapay zeka", "ai"],
-        "sanat": ["sanat", "art", "resim", "painting", "müzik", "music", "heykel", "sculpture"],
-        "doğa": ["doğa", "nature", "çevre", "environment", "orman", "forest", "deniz", "sea"],
+        "psikoloji": [
+            "psikoloji",
+            "psychology",
+            "ruh",
+            "soul",
+            "karakter",
+            "character",
+            "davranış",
+            "behavior",
+        ],
+        "teknoloji": [
+            "teknoloji",
+            "technology",
+            "tech",
+            "dijital",
+            "digital",
+            "yapay zeka",
+            "ai",
+        ],
+        "sanat": [
+            "sanat",
+            "art",
+            "resim",
+            "painting",
+            "müzik",
+            "music",
+            "heykel",
+            "sculpture",
+        ],
+        "doğa": [
+            "doğa",
+            "nature",
+            "çevre",
+            "environment",
+            "orman",
+            "forest",
+            "deniz",
+            "sea",
+        ],
         "aşk": ["aşk", "love", "romantik", "romantic", "kalp", "heart"],
-        "macera": ["macera", "adventure", "keşif", "exploration", "heyecan", "excitement"],
+        "macera": [
+            "macera",
+            "adventure",
+            "keşif",
+            "exploration",
+            "heyecan",
+            "excitement",
+        ],
         "gizem": ["gizem", "mystery", "gerilim", "thriller", "suspense"],
         "komedi": ["komedi", "comedy", "mizah", "humor", "eğlenceli", "funny"],
         "drama": ["drama", "dramatic", "duygusal", "emotional", "tragedy"],
@@ -772,9 +847,7 @@ def get_mock_response(user_message: str, user_language: str = "tr") -> str:
             else:
                 # Fallback to default responses for new topics
                 if user_language == "tr":
-                    return (
-                        f"{topic.title()} konusunda size yardımcı olabilirim! Hangi türde {topic} kitabı arıyorsunuz?"
-                    )
+                    return f"{topic.title()} konusunda size yardımcı olabilirim! Hangi türde {topic} kitabı arıyorsunuz?"
                 else:
                     return f"I can help you with {topic}! What type of {topic} book are you looking for?"
 
@@ -892,7 +965,9 @@ async def chat(request: ChatRequest):
             "genç",
             "yetişkin",
         ]
-        is_book_request = any(keyword in user_message.lower() for keyword in book_keywords)
+        is_book_request = any(
+            keyword in user_message.lower() for keyword in book_keywords
+        )
         print(
             f"DEBUG: Book request check - message: '{user_message.lower()}', keywords: {book_keywords}, is_book_request: {is_book_request}"
         )
@@ -901,7 +976,9 @@ async def chat(request: ChatRequest):
         books_data = None
         if is_book_request:
             try:
-                print(f"DEBUG: Book request detected! BOOKS_DATABASE length: {len(BOOKS_DATABASE)}")
+                print(
+                    f"DEBUG: Book request detected! BOOKS_DATABASE length: {len(BOOKS_DATABASE)}"
+                )
 
                 # Filter books by genre if mentioned
                 message_lower = user_message.lower()
@@ -912,24 +989,48 @@ async def chat(request: ChatRequest):
                     filtered_books = [
                         book
                         for book in BOOKS_DATABASE
-                        if "bilim kurgu" in book.get("genre", "").lower() or "distopya" in book.get("genre", "").lower()
+                        if "bilim kurgu" in book.get("genre", "").lower()
+                        or "distopya" in book.get("genre", "").lower()
                     ]
                 elif "fantastik" in message_lower:
-                    filtered_books = [book for book in BOOKS_DATABASE if "fantastik" in book.get("genre", "").lower()]
+                    filtered_books = [
+                        book
+                        for book in BOOKS_DATABASE
+                        if "fantastik" in book.get("genre", "").lower()
+                    ]
                 elif "roman" in message_lower:
-                    filtered_books = [book for book in BOOKS_DATABASE if "roman" in book.get("genre", "").lower()]
+                    filtered_books = [
+                        book
+                        for book in BOOKS_DATABASE
+                        if "roman" in book.get("genre", "").lower()
+                    ]
                 elif "klasik" in message_lower:
                     filtered_books = [
                         book
                         for book in BOOKS_DATABASE
-                        if any(keyword in book.get("genre", "").lower() for keyword in ["klasik", "roman", "distopya"])
+                        if any(
+                            keyword in book.get("genre", "").lower()
+                            for keyword in ["klasik", "roman", "distopya"]
+                        )
                     ]
                 elif "polisiye" in message_lower:
-                    filtered_books = [book for book in BOOKS_DATABASE if "polisiye" in book.get("genre", "").lower()]
+                    filtered_books = [
+                        book
+                        for book in BOOKS_DATABASE
+                        if "polisiye" in book.get("genre", "").lower()
+                    ]
                 elif "felsefe" in message_lower:
-                    filtered_books = [book for book in BOOKS_DATABASE if "felsefe" in book.get("genre", "").lower()]
+                    filtered_books = [
+                        book
+                        for book in BOOKS_DATABASE
+                        if "felsefe" in book.get("genre", "").lower()
+                    ]
                 elif "çocuk" in message_lower:
-                    filtered_books = [book for book in BOOKS_DATABASE if "çocuk" in book.get("genre", "").lower()]
+                    filtered_books = [
+                        book
+                        for book in BOOKS_DATABASE
+                        if "çocuk" in book.get("genre", "").lower()
+                    ]
 
                 # If no specific genre found, use first 3 books
                 if not filtered_books:
@@ -946,7 +1047,9 @@ async def chat(request: ChatRequest):
                             "title": book.get("title_en", book.get("title", "")),
                             "author": book.get("author", ""),
                             "genre": book.get("genre_en", book.get("genre", "")),
-                            "description": book.get("description_en", book.get("description", "")),
+                            "description": book.get(
+                                "description_en", book.get("description", "")
+                            ),
                             "rating": book.get("rating", 0),
                             "year": book.get("year", 0),
                         }
@@ -973,7 +1076,12 @@ async def chat(request: ChatRequest):
         print(f"DEBUG: books_data type: {type(books_data)}")
         print(f"DEBUG: books_data length: {len(books_data) if books_data else 'None'}")
 
-        return ChatResponse(success=True, response=ai_response, user_message=user_message, books=books_data)
+        return ChatResponse(
+            success=True,
+            response=ai_response,
+            user_message=user_message,
+            books=books_data,
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -993,7 +1101,11 @@ async def get_book_recommendations(request: BookRecommendationRequest):
         if genre:
             # Filter by genre (case-insensitive)
             genre_lower = genre.lower()
-            filtered_books = [book for book in BOOKS_DATABASE if genre_lower in book.get("genre", "").lower()]
+            filtered_books = [
+                book
+                for book in BOOKS_DATABASE
+                if genre_lower in book.get("genre", "").lower()
+            ]
 
         if mood:
             # Mood-based filtering
@@ -1006,7 +1118,14 @@ async def get_book_recommendations(request: BookRecommendationRequest):
                     for book in BOOKS_DATABASE
                     if any(
                         keyword in book.get("description", "").lower()
-                        for keyword in ["mutlu", "neşeli", "sıcak", "umut", "güzel", "harika"]
+                        for keyword in [
+                            "mutlu",
+                            "neşeli",
+                            "sıcak",
+                            "umut",
+                            "güzel",
+                            "harika",
+                        ]
                     )
                 ]
             elif mood_lower in ["üzgün", "sad", "hüzünlü", "melancholic"]:
@@ -1024,7 +1143,13 @@ async def get_book_recommendations(request: BookRecommendationRequest):
                     for book in BOOKS_DATABASE
                     if any(
                         keyword in book.get("description", "").lower()
-                        for keyword in ["sakin", "huzur", "rahat", "dinlendirici", "doğa"]
+                        for keyword in [
+                            "sakin",
+                            "huzur",
+                            "rahat",
+                            "dinlendirici",
+                            "doğa",
+                        ]
                     )
                 ]
             elif mood_lower in ["enerjik", "energetic", "canlı", "lively"]:
@@ -1033,19 +1158,33 @@ async def get_book_recommendations(request: BookRecommendationRequest):
                     for book in BOOKS_DATABASE
                     if any(
                         keyword in book.get("description", "").lower()
-                        for keyword in ["macera", "aksiyon", "heyecan", "gizem", "polisiye"]
+                        for keyword in [
+                            "macera",
+                            "aksiyon",
+                            "heyecan",
+                            "gizem",
+                            "polisiye",
+                        ]
                     )
                 ]
 
             if mood_books:
-                filtered_books = mood_books if not filtered_books else [b for b in filtered_books if b in mood_books]
+                filtered_books = (
+                    mood_books
+                    if not filtered_books
+                    else [b for b in filtered_books if b in mood_books]
+                )
 
         # If no specific preferences, return top-rated books
         if not filtered_books:
-            filtered_books = sorted(BOOKS_DATABASE, key=lambda x: x.get("rating", 0), reverse=True)[:10]
+            filtered_books = sorted(
+                BOOKS_DATABASE, key=lambda x: x.get("rating", 0), reverse=True
+            )[:10]
         else:
             # Sort filtered books by rating
-            filtered_books = sorted(filtered_books, key=lambda x: x.get("rating", 0), reverse=True)
+            filtered_books = sorted(
+                filtered_books, key=lambda x: x.get("rating", 0), reverse=True
+            )
 
         # Limit to top 5 recommendations
         top_books = filtered_books[:5]
@@ -1060,14 +1199,18 @@ async def get_book_recommendations(request: BookRecommendationRequest):
             recommendations += f"   📖 {book['description']}\n\n"
 
         if not top_books:
-            recommendations = (
-                "Üzgünüm, belirttiğiniz kriterlere uygun kitap bulamadım. Size genel öneriler verebilirim:\n\n"
-            )
-            top_general = sorted(BOOKS_DATABASE, key=lambda x: x.get("rating", 0), reverse=True)[:3]
+            recommendations = "Üzgünüm, belirttiğiniz kriterlere uygun kitap bulamadım. Size genel öneriler verebilirim:\n\n"
+            top_general = sorted(
+                BOOKS_DATABASE, key=lambda x: x.get("rating", 0), reverse=True
+            )[:3]
             for i, book in enumerate(top_general, 1):
-                recommendations += f"{i}. **{book['title']}** - {book['author']} ({book['genre']})\n"
+                recommendations += (
+                    f"{i}. **{book['title']}** - {book['author']} ({book['genre']})\n"
+                )
 
-        return BookRecommendationResponse(success=True, recommendations=recommendations, books=top_books)
+        return BookRecommendationResponse(
+            success=True, recommendations=recommendations, books=top_books
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -1096,7 +1239,9 @@ async def get_random_books():
 async def get_top_rated_books():
     """Get top 10 highest rated books"""
     try:
-        top_books = sorted(BOOKS_DATABASE, key=lambda x: x.get("rating", 0), reverse=True)[:10]
+        top_books = sorted(
+            BOOKS_DATABASE, key=lambda x: x.get("rating", 0), reverse=True
+        )[:10]
 
         return {
             "success": True,
@@ -1114,13 +1259,19 @@ async def get_books_by_genre(genre_name: str):
     """Get books by specific genre"""
     try:
         genre_lower = genre_name.lower()
-        genre_books = [book for book in BOOKS_DATABASE if genre_lower in book.get("genre", "").lower()]
+        genre_books = [
+            book
+            for book in BOOKS_DATABASE
+            if genre_lower in book.get("genre", "").lower()
+        ]
 
         if not genre_books:
             return {
                 "success": False,
                 "message": f"'{genre_name}' türünde kitap bulunamadı.",
-                "available_genres": list(set(book.get("genre", "") for book in BOOKS_DATABASE)),
+                "available_genres": list(
+                    set(book.get("genre", "") for book in BOOKS_DATABASE)
+                ),
             }
 
         return {
@@ -1145,7 +1296,9 @@ async def search_openlibrary_books(query: str, limit: int = 20):
     """Search books from Open Library API"""
     try:
         if not openlibrary_service:
-            raise HTTPException(status_code=503, detail="Open Library service not available")
+            raise HTTPException(
+                status_code=503, detail="Open Library service not available"
+            )
 
         books = openlibrary_service.search_books(query, limit)
 
@@ -1166,7 +1319,9 @@ async def get_popular_openlibrary_books(limit: int = 30):
     """Get popular books from Open Library"""
     try:
         if not openlibrary_service:
-            raise HTTPException(status_code=503, detail="Open Library service not available")
+            raise HTTPException(
+                status_code=503, detail="Open Library service not available"
+            )
 
         books = openlibrary_service.search_popular_books(limit)
 
@@ -1186,7 +1341,9 @@ async def sync_openlibrary_books(sync_request: dict):
     """Sync books from Open Library to local database"""
     try:
         if not openlibrary_service:
-            raise HTTPException(status_code=503, detail="Open Library service not available")
+            raise HTTPException(
+                status_code=503, detail="Open Library service not available"
+            )
 
         query = sync_request.get("query", "bestseller")
         limit = sync_request.get("limit", 20)
@@ -1223,7 +1380,11 @@ async def check_openlibrary_health():
     """Check Open Library API health"""
     try:
         if not openlibrary_service:
-            return {"success": False, "message": "Open Library service not available", "status": "unavailable"}
+            return {
+                "success": False,
+                "message": "Open Library service not available",
+                "status": "unavailable",
+            }
 
         health = openlibrary_service.health_check()
 
@@ -1238,11 +1399,20 @@ async def get_available_genres():
     """Get available genres from Open Library service"""
     try:
         if not openlibrary_service:
-            return {"success": False, "message": "Open Library service not available", "genres": []}
+            return {
+                "success": False,
+                "message": "Open Library service not available",
+                "genres": [],
+            }
 
         genres = openlibrary_service.get_available_genres()
 
-        return {"success": True, "genres": genres, "count": len(genres), "message": f"{len(genres)} farklı tür mevcut"}
+        return {
+            "success": True,
+            "genres": genres,
+            "count": len(genres),
+            "message": f"{len(genres)} farklı tür mevcut",
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -1258,7 +1428,9 @@ async def register_user(request: dict):
     """Register a new user"""
     try:
         if auth_service is None:
-            raise HTTPException(status_code=503, detail="Authentication service not available")
+            raise HTTPException(
+                status_code=503, detail="Authentication service not available"
+            )
 
         # Extract user data
         username = request.get("username")
@@ -1270,7 +1442,11 @@ async def register_user(request: dict):
 
         # Check if user already exists
         db = next(get_db())
-        existing_user = db.query(User).filter((User.email == email) | (User.username == username)).first()
+        existing_user = (
+            db.query(User)
+            .filter((User.email == email) | (User.username == username))
+            .first()
+        )
 
         if existing_user:
             raise HTTPException(status_code=400, detail="User already exists")
@@ -1296,7 +1472,11 @@ async def register_user(request: dict):
         return {
             "success": True,
             "message": "User registered successfully",
-            "user": {"id": new_user.id, "username": new_user.username, "email": new_user.email},
+            "user": {
+                "id": new_user.id,
+                "username": new_user.username,
+                "email": new_user.email,
+            },
             **tokens,
         }
 
@@ -1309,7 +1489,9 @@ async def login_user(request: dict):
     """Login user with email and password"""
     try:
         if auth_service is None:
-            raise HTTPException(status_code=503, detail="Authentication service not available")
+            raise HTTPException(
+                status_code=503, detail="Authentication service not available"
+            )
 
         email = request.get("email")
         password = request.get("password")
@@ -1355,7 +1537,9 @@ async def refresh_token(request: dict):
     """Refresh access token using refresh token"""
     try:
         if auth_service is None:
-            raise HTTPException(status_code=503, detail="Authentication service not available")
+            raise HTTPException(
+                status_code=503, detail="Authentication service not available"
+            )
 
         refresh_token = request.get("refresh_token")
         if not refresh_token:
@@ -1364,7 +1548,11 @@ async def refresh_token(request: dict):
         # Refresh token
         new_access_token = auth_service.refresh_access_token(refresh_token)
 
-        return {"success": True, "access_token": new_access_token, "token_type": "bearer"}
+        return {
+            "success": True,
+            "access_token": new_access_token,
+            "token_type": "bearer",
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -1397,7 +1585,9 @@ async def oauth_callback(provider: str, request: dict):
             raise HTTPException(status_code=400, detail="Authorization code required")
 
         # Exchange code for token
-        token_data = oauth2_service.exchange_code_for_token(provider, authorization_code)
+        token_data = oauth2_service.exchange_code_for_token(
+            provider, authorization_code
+        )
         access_token = token_data["access_token"]
 
         # Get user info from provider
@@ -1405,7 +1595,13 @@ async def oauth_callback(provider: str, request: dict):
 
         # Check if user exists, if not create
         db = next(get_db())
-        user = db.query(User).filter(User.auth_provider == provider, User.auth_provider_id == user_info["id"]).first()
+        user = (
+            db.query(User)
+            .filter(
+                User.auth_provider == provider, User.auth_provider_id == user_info["id"]
+            )
+            .first()
+        )
 
         if not user:
             # Create new user
@@ -1459,8 +1655,12 @@ async def get_user_profile(current_user: User = Depends(get_current_active_user)
                 "is_active": bool(current_user.is_active),
                 "is_verified": bool(current_user.is_verified),
                 "auth_provider": current_user.auth_provider,
-                "created_at": current_user.created_at.isoformat() if current_user.created_at else None,
-                "last_login": current_user.last_login.isoformat() if current_user.last_login else None,
+                "created_at": current_user.created_at.isoformat()
+                if current_user.created_at
+                else None,
+                "last_login": current_user.last_login.isoformat()
+                if current_user.last_login
+                else None,
             },
         }
 
@@ -1469,7 +1669,9 @@ async def get_user_profile(current_user: User = Depends(get_current_active_user)
 
 
 @app.put("/api/auth/profile", response_model=dict)
-async def update_user_profile(request: dict, current_user: User = Depends(get_current_active_user)):
+async def update_user_profile(
+    request: dict, current_user: User = Depends(get_current_active_user)
+):
     """Update user profile"""
     try:
         db = next(get_db())
@@ -1547,12 +1749,17 @@ async def analyze_reading(request: ReadingAnalysisRequest):
 
         try:
             if client is None:
-                raise HTTPException(status_code=503, detail="OpenAI API is not configured.")
+                raise HTTPException(
+                    status_code=503, detail="OpenAI API is not configured."
+                )
 
             response = client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
-                    {"role": "system", "content": "You are a literature analyst and reading coach."},
+                    {
+                        "role": "system",
+                        "content": "You are a literature analyst and reading coach.",
+                    },
                     {"role": "user", "content": prompt},
                 ],
                 max_tokens=500,
@@ -1580,9 +1787,12 @@ async def transcribe_audio(file: UploadFile = File(...)):
         if file.content_type is None or not file.content_type.startswith("audio/"):
             # Also check file extension as fallback
             if not file.filename or not any(
-                file.filename.lower().endswith(ext) for ext in [".wav", ".mp3", ".m4a", ".ogg", ".flac"]
+                file.filename.lower().endswith(ext)
+                for ext in [".wav", ".mp3", ".m4a", ".ogg", ".flac"]
             ):
-                raise HTTPException(status_code=400, detail="Only audio files are accepted")
+                raise HTTPException(
+                    status_code=400, detail="Only audio files are accepted"
+                )
 
         # Save uploaded file temporarily
         with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
@@ -1592,7 +1802,9 @@ async def transcribe_audio(file: UploadFile = File(...)):
 
         try:
             if client is None:
-                raise HTTPException(status_code=503, detail="OpenAI API is not configured.")
+                raise HTTPException(
+                    status_code=503, detail="OpenAI API is not configured."
+                )
 
             print(f"Using OpenAI Whisper API with file: {temp_file_path}")
             print(f"File size: {os.path.getsize(temp_file_path)} bytes")
@@ -1615,7 +1827,10 @@ async def transcribe_audio(file: UploadFile = File(...)):
             import traceback
 
             traceback.print_exc()
-            raise HTTPException(status_code=500, detail=f"Audio-to-text transcription failed: {str(openai_error)}")
+            raise HTTPException(
+                status_code=500,
+                detail=f"Audio-to-text transcription failed: {str(openai_error)}",
+            )
 
         finally:
             # Clean up temporary file
@@ -1628,7 +1843,9 @@ async def transcribe_audio(file: UploadFile = File(...)):
 
         traceback.print_exc()
         error_detail = str(e) if e else "Unknown error occurred"
-        raise HTTPException(status_code=500, detail=f"Transcription failed: {error_detail}")
+        raise HTTPException(
+            status_code=500, detail=f"Transcription failed: {error_detail}"
+        )
 
 
 # RAG Service Endpoints
@@ -1642,18 +1859,24 @@ async def rag_chat(request: ChatRequest, db: Session = Depends(get_db)):
         # Use RAG service to answer questions
         response = rag_service.answer_question(request.message)
 
-        return ChatResponse(success=True, response=response, user_message=request.message)
+        return ChatResponse(
+            success=True, response=response, user_message=request.message
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.post("/api/rag/recommendations")
-async def rag_recommendations(request: BookRecommendationRequest, db: Session = Depends(get_db)):
+async def rag_recommendations(
+    request: BookRecommendationRequest, db: Session = Depends(get_db)
+):
     """Get personalized book recommendations using RAG"""
     try:
         # Get recommendations from RAG service
-        recommendations = rag_service.get_book_recommendations(request.preferences, limit=5)
+        recommendations = rag_service.get_book_recommendations(
+            request.preferences, limit=5
+        )
 
         # Create response text
         if recommendations:
@@ -1664,11 +1887,11 @@ async def rag_recommendations(request: BookRecommendationRequest, db: Session = 
                 response_text += f"   Rating: {book['rating']}/5\n"
                 response_text += f"   {book['description']}\n\n"
         else:
-            response_text = (
-                "I couldn't find suitable book recommendations for you right now. Please specify different preferences."
-            )
+            response_text = "I couldn't find suitable book recommendations for you right now. Please specify different preferences."
 
-        return BookRecommendationResponse(success=True, recommendations=response_text, books=recommendations)
+        return BookRecommendationResponse(
+            success=True, recommendations=response_text, books=recommendations
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -1688,7 +1911,9 @@ async def rag_search_books(q: str, limit: int = 10, db: Session = Depends(get_db
 
 # Vector Service Endpoints
 @app.get("/api/vector/search")
-async def vector_search_books(q: str, limit: int = 10, threshold: float = 0.7, db: Session = Depends(get_db)):
+async def vector_search_books(
+    q: str, limit: int = 10, threshold: float = 0.7, db: Session = Depends(get_db)
+):
     """Advanced semantic search with similarity threshold"""
     try:
         if vector_service is None:
@@ -1696,14 +1921,22 @@ async def vector_search_books(q: str, limit: int = 10, threshold: float = 0.7, d
 
         results = vector_service.semantic_search(q, limit=limit, threshold=threshold)
 
-        return {"success": True, "query": q, "results": results, "count": len(results), "threshold": threshold}
+        return {
+            "success": True,
+            "query": q,
+            "results": results,
+            "count": len(results),
+            "threshold": threshold,
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/api/vector/similar/{book_title}")
-async def find_similar_books(book_title: str, limit: int = 5, db: Session = Depends(get_db)):
+async def find_similar_books(
+    book_title: str, limit: int = 5, db: Session = Depends(get_db)
+):
     """Find books similar to a given book"""
     try:
         if vector_service is None:
@@ -1711,14 +1944,21 @@ async def find_similar_books(book_title: str, limit: int = 5, db: Session = Depe
 
         results = vector_service.find_similar_books(book_title, limit=limit)
 
-        return {"success": True, "book_title": book_title, "similar_books": results, "count": len(results)}
+        return {
+            "success": True,
+            "book_title": book_title,
+            "similar_books": results,
+            "count": len(results),
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
 
 @app.get("/api/vector/category/{category}")
-async def get_category_recommendations(category: str, limit: int = 10, db: Session = Depends(get_db)):
+async def get_category_recommendations(
+    category: str, limit: int = 10, db: Session = Depends(get_db)
+):
     """Get book recommendations by category"""
     try:
         if vector_service is None:
@@ -1726,7 +1966,12 @@ async def get_category_recommendations(category: str, limit: int = 10, db: Sessi
 
         results = vector_service.get_category_recommendations(category, limit=limit)
 
-        return {"success": True, "category": category, "books": results, "count": len(results)}
+        return {
+            "success": True,
+            "category": category,
+            "books": results,
+            "count": len(results),
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -1741,7 +1986,12 @@ async def get_author_books(author: str, limit: int = 10, db: Session = Depends(g
 
         results = vector_service.get_author_books(author, limit=limit)
 
-        return {"success": True, "author": author, "books": results, "count": len(results)}
+        return {
+            "success": True,
+            "author": author,
+            "books": results,
+            "count": len(results),
+        }
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

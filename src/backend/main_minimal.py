@@ -15,7 +15,11 @@ app = FastAPI(title="Luminis.AI Library Assistant API", version="1.0.0")
 
 # Configure CORS
 app.add_middleware(
-    CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"]
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -239,7 +243,9 @@ TURKISH_BOOKS = {
 }
 
 
-async def search_books_openlibrary(query: str, subject: str = None, limit: int = 10) -> List[Dict]:
+async def search_books_openlibrary(
+    query: str, subject: str = None, limit: int = 10
+) -> List[Dict]:
     """Search books using Open Library API"""
     try:
         async with httpx.AsyncClient(timeout=10.0) as client:
@@ -253,9 +259,13 @@ async def search_books_openlibrary(query: str, subject: str = None, limit: int =
             if subject:
                 params["subject"] = subject
 
-            print(f"DEBUG: Searching Open Library with query: {query}, subject: {subject}")
+            print(
+                f"DEBUG: Searching Open Library with query: {query}, subject: {subject}"
+            )
 
-            response = await client.get("https://openlibrary.org/search.json", params=params)
+            response = await client.get(
+                "https://openlibrary.org/search.json", params=params
+            )
 
             if response.status_code == 200:
                 data = response.json()
@@ -264,10 +274,16 @@ async def search_books_openlibrary(query: str, subject: str = None, limit: int =
                 for doc in data.get("docs", [])[:limit]:
                     book = {
                         "title": doc.get("title", "Bilinmeyen Kitap"),
-                        "author": ", ".join(doc.get("author_name", ["Bilinmeyen Yazar"])[:2]),
-                        "genre": ", ".join(doc.get("subject", ["Genel"])[:2]) if doc.get("subject") else "Genel",
+                        "author": ", ".join(
+                            doc.get("author_name", ["Bilinmeyen Yazar"])[:2]
+                        ),
+                        "genre": ", ".join(doc.get("subject", ["Genel"])[:2])
+                        if doc.get("subject")
+                        else "Genel",
                         "year": doc.get("first_publish_year", ""),
-                        "rating": round(doc.get("ratings_average", 0) or random.uniform(4.0, 4.8), 1),
+                        "rating": round(
+                            doc.get("ratings_average", 0) or random.uniform(4.0, 4.8), 1
+                        ),
                         "description": f"{doc.get('title', '')} - {', '.join(doc.get('author_name', [''])[:1])}",
                     }
                     books.append(book)
@@ -301,7 +317,9 @@ def get_turkish_books_by_category(category: str, limit: int = 3) -> List[Dict]:
     return all_books[:limit]
 
 
-async def get_book_recommendations(user_message: str, language: str = "tr") -> List[Dict]:
+async def get_book_recommendations(
+    user_message: str, language: str = "tr"
+) -> List[Dict]:
     """Get book recommendations based on user message and language"""
 
     # Detect book category from message
@@ -322,7 +340,9 @@ async def get_book_recommendations(user_message: str, language: str = "tr") -> L
         if detected_category:
             # Get Turkish books for specific category
             turkish_books = get_turkish_books_by_category(detected_category, limit=4)
-            print(f"DEBUG: Found {len(turkish_books)} Turkish books for category: {detected_category}")
+            print(
+                f"DEBUG: Found {len(turkish_books)} Turkish books for category: {detected_category}"
+            )
         else:
             # Get mixed Turkish books
             turkish_books = get_turkish_books_by_category("roman", limit=2)
@@ -334,7 +354,9 @@ async def get_book_recommendations(user_message: str, language: str = "tr") -> L
             if detected_category and detected_category in BOOK_SUBJECTS:
                 subjects = BOOK_SUBJECTS[detected_category]
                 subject = random.choice(subjects)
-                international_books = await search_books_openlibrary("", subject=subject, limit=1)
+                international_books = await search_books_openlibrary(
+                    "", subject=subject, limit=1
+                )
                 if international_books:
                     turkish_books.extend(international_books[:1])
                     print(f"DEBUG: Added 1 international book")
@@ -387,7 +409,11 @@ async def get_book_recommendations(user_message: str, language: str = "tr") -> L
 # Endpoints
 @app.get("/")
 async def root():
-    return {"message": "Luminis.AI Library Assistant API", "version": "1.0.0", "status": "running"}
+    return {
+        "message": "Luminis.AI Library Assistant API",
+        "version": "1.0.0",
+        "status": "running",
+    }
 
 
 @app.post("/api/chat", response_model=ChatResponse)
@@ -420,7 +446,9 @@ async def chat(request: ChatRequest):
             "felsefe",
             "psikoloji",
         ]
-        is_book_request = any(keyword in user_message.lower() for keyword in book_keywords)
+        is_book_request = any(
+            keyword in user_message.lower() for keyword in book_keywords
+        )
         print(f"DEBUG: Book request detected: {is_book_request}")
 
         # Simple mock response
@@ -465,12 +493,20 @@ async def chat(request: ChatRequest):
                     },
                 ]
 
-        return ChatResponse(success=True, response=ai_response, user_message=user_message, books=books_data)
+        return ChatResponse(
+            success=True,
+            response=ai_response,
+            user_message=user_message,
+            books=books_data,
+        )
 
     except Exception as e:
         print(f"ERROR in chat endpoint: {e}")
         return ChatResponse(
-            success=False, response=f"Üzgünüm, bir hata oluştu: {str(e)}", user_message=request.message, books=None
+            success=False,
+            response=f"Üzgünüm, bir hata oluştu: {str(e)}",
+            user_message=request.message,
+            books=None,
         )
 
 

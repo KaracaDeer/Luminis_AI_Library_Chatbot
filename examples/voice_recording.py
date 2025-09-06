@@ -66,14 +66,14 @@ class VoiceRecorder:
         stream.close()
 
         # Combine frames
-        audio_data = b''.join(frames)
+        audio_data = b"".join(frames)
         print("✅ Recording completed!")
 
         return audio_data
 
     def save_audio(self, audio_data: bytes, filename: str):
         """Save audio data to WAV file"""
-        with wave.open(filename, 'wb') as wf:
+        with wave.open(filename, "wb") as wf:
             wf.setnchannels(self.channels)
             wf.setsampwidth(self.audio.get_sample_size(self.audio_format))
             wf.setframerate(self.sample_rate)
@@ -105,7 +105,7 @@ class LuminisVoiceClient:
         url = f"{self.base_url}/api/voice/transcribe"
 
         # Encode audio as base64
-        audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+        audio_base64 = base64.b64encode(audio_data).decode("utf-8")
 
         payload = {"audio_data": audio_base64, "format": "wav"}
 
@@ -132,7 +132,7 @@ class LuminisVoiceClient:
         url = f"{self.base_url}/api/voice/chat"
 
         # Encode audio as base64
-        audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+        audio_base64 = base64.b64encode(audio_data).decode("utf-8")
 
         payload = {"audio_data": audio_base64, "format": "wav", "user_id": user_id}
 
@@ -179,11 +179,11 @@ def main():
         while True:
             command = input("\nEnter command: ").strip().lower()
 
-            if command == 'quit':
+            if command == "quit":
                 print("👋 Goodbye!")
                 break
 
-            elif command == 'record':
+            elif command == "record":
                 # Record audio
                 audio_data = recorder.record_audio(duration=5.0)
 
@@ -199,7 +199,9 @@ def main():
                 if "error" in response:
                     print(f"❌ Transcription error: {response['error']}")
                 else:
-                    transcription = response.get("transcription", "No transcription received")
+                    transcription = response.get(
+                        "transcription", "No transcription received"
+                    )
                     print(f"📝 Transcription: {transcription}")
 
                     # Send for chat response
@@ -209,7 +211,9 @@ def main():
                     if "error" in chat_response:
                         print(f"❌ Chat error: {chat_response['error']}")
                     else:
-                        ai_response = chat_response.get("response", "No response received")
+                        ai_response = chat_response.get(
+                            "response", "No response received"
+                        )
                         print(f"🤖 AI Response: {ai_response}")
 
             else:
@@ -237,12 +241,14 @@ def example_voice_requests():
             audio_data = f.read()
 
         # Encode as base64
-        audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+        audio_base64 = base64.b64encode(audio_data).decode("utf-8")
 
         payload = {"audio_data": audio_base64, "format": "wav"}
 
         response = requests.post(
-            "http://localhost:8000/api/voice/transcribe", json=payload, headers={"Content-Type": "application/json"}
+            "http://localhost:8000/api/voice/transcribe",
+            json=payload,
+            headers={"Content-Type": "application/json"},
         )
 
         print(f"   Status: {response.status_code}")

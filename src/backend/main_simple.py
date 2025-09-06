@@ -19,7 +19,11 @@ app = FastAPI(title="Luminis.AI Library Assistant API", version="1.0.0")
 
 # Configure CORS
 app.add_middleware(
-    CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"]
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -76,7 +80,9 @@ async def chat(request: ChatRequest):
         else:
             response = "Teşekkürler! Size daha iyi yardımcı olabilmem için kitap tercihleriniz hakkında bilgi verebilir misiniz?"
 
-        return ChatResponse(success=True, response=response, user_message=request.message)
+        return ChatResponse(
+            success=True, response=response, user_message=request.message
+        )
 
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
@@ -95,7 +101,11 @@ async def get_books():
 @app.get("/api/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status": "healthy", "message": "Luminis.AI Library Assistant API is running", "version": "1.0.0"}
+    return {
+        "status": "healthy",
+        "message": "Luminis.AI Library Assistant API is running",
+        "version": "1.0.0",
+    }
 
 
 @app.get("/")

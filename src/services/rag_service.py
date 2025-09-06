@@ -82,9 +82,13 @@ load_dotenv()
 class RAGService:
     def __init__(self):
         """Initialize RAG service with OpenAI and ChromaDB"""
-        self.embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"), model="text-embedding-ada-002")
+        self.embeddings = OpenAIEmbeddings(
+            openai_api_key=os.getenv("OPENAI_API_KEY"), model="text-embedding-ada-002"
+        )
 
-        self.llm = ChatOpenAI(openai_api_key=os.getenv("OPENAI_API_KEY"), model="gpt-4", temperature=0.7)
+        self.llm = ChatOpenAI(
+            openai_api_key=os.getenv("OPENAI_API_KEY"), model="gpt-4", temperature=0.7
+        )
 
         # Initialize vector store
         self.vector_store = None
@@ -130,7 +134,9 @@ class RAGService:
 
             # Create vector store
             self.vector_store = Chroma.from_documents(
-                documents=documents, embedding=self.embeddings, persist_directory="./chroma_db"
+                documents=documents,
+                embedding=self.embeddings,
+                persist_directory="./chroma_db",
             )
 
             print(f"Vector store initialized with {len(documents)} books")
@@ -197,12 +203,16 @@ class RAGService:
             documents.append(Document(page_content=content, metadata=metadata))
 
         self.vector_store = Chroma.from_documents(
-            documents=documents, embedding=self.embeddings, persist_directory="./chroma_db"
+            documents=documents,
+            embedding=self.embeddings,
+            persist_directory="./chroma_db",
         )
 
         print(f"Sample vector store created with {len(documents)} books")
 
-    def get_book_recommendations(self, user_preferences: Dict[str, Any], limit: int = 5) -> List[Dict[str, Any]]:
+    def get_book_recommendations(
+        self, user_preferences: Dict[str, Any], limit: int = 5
+    ) -> List[Dict[str, Any]]:
         """Get personalized book recommendations based on user preferences"""
         try:
             # Create query based on user preferences
@@ -218,7 +228,9 @@ class RAGService:
                         "title": doc.metadata.get("title"),
                         "author": doc.metadata.get("author"),
                         "category": doc.metadata.get("category"),
-                        "description": doc.page_content.split("Açıklama: ")[1].split("\n")[0]
+                        "description": doc.page_content.split("Açıklama: ")[1].split(
+                            "\n"
+                        )[0]
                         if "Açıklama: " in doc.page_content
                         else "",
                         "year": doc.metadata.get("year"),
@@ -296,7 +308,9 @@ class RAGService:
                         "title": doc.metadata.get("title"),
                         "author": doc.metadata.get("author"),
                         "category": doc.metadata.get("category"),
-                        "description": doc.page_content.split("Açıklama: ")[1].split("\n")[0]
+                        "description": doc.page_content.split("Açıklama: ")[1].split(
+                            "\n"
+                        )[0]
                         if "Açıklama: " in doc.page_content
                         else "",
                         "year": doc.metadata.get("year"),

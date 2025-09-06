@@ -193,16 +193,16 @@ def main():
         try:
             command = input("\nEnter command: ").strip()
 
-            if command.lower() == 'quit':
+            if command.lower() == "quit":
                 print("👋 Goodbye!")
                 break
 
-            elif command.lower() == 'popular':
+            elif command.lower() == "popular":
                 print("🔥 Fetching popular books...")
                 results = client.get_popular_books(limit=5)
                 display_search_results(results)
 
-            elif command.lower() == 'genres':
+            elif command.lower() == "genres":
                 print("🏷️ Fetching available genres...")
                 response = client.get_available_genres()
                 if "error" in response:
@@ -213,7 +213,7 @@ def main():
                     for genre in genres:
                         print(f"   • {genre}")
 
-            elif command.lower().startswith('genre '):
+            elif command.lower().startswith("genre "):
                 genre = command[6:].strip()
                 if not genre:
                     print("❌ Please specify a genre name")
@@ -222,7 +222,7 @@ def main():
                 results = client.get_books_by_genre(genre, limit=5)
                 display_search_results(results)
 
-            elif command.lower().startswith('book '):
+            elif command.lower().startswith("book "):
                 book_id = command[5:].strip()
                 if not book_id:
                     print("❌ Please specify a book ID")
@@ -238,7 +238,7 @@ def main():
                     else:
                         print("📚 Book not found")
 
-            elif command.lower().startswith('search '):
+            elif command.lower().startswith("search "):
                 query = command[7:].strip()
                 if not query:
                     print("❌ Please specify a search query")
@@ -268,7 +268,13 @@ def example_searches():
     client = BookSearchClient()
 
     # Example searches
-    example_queries = ["Python programming", "machine learning", "fiction", "science", "history"]
+    example_queries = [
+        "Python programming",
+        "machine learning",
+        "fiction",
+        "science",
+        "history",
+    ]
 
     for query in example_queries:
         print(f"\n🔍 Searching for: '{query}'")
@@ -280,7 +286,9 @@ def example_searches():
             books = results.get("books", [])
             print(f"   📚 Found {len(books)} books")
             for book in books[:2]:  # Show first 2 results
-                print(f"   • {book.get('title', 'Unknown')} by {book.get('author', 'Unknown')}")
+                print(
+                    f"   • {book.get('title', 'Unknown')} by {book.get('author', 'Unknown')}"
+                )
 
 
 if __name__ == "__main__":

@@ -87,7 +87,9 @@ def test_api_endpoints():
 
         # Optional: vector search endpoint may be disabled without OpenAI
         try:
-            response = requests.get(f"{base_url}/api/vector/search?q=roman&limit=3", timeout=10)
+            response = requests.get(
+                f"{base_url}/api/vector/search?q=roman&limit=3", timeout=10
+            )
             if response.status_code == 200:
                 print("OK: Vector search endpoint working")
             else:

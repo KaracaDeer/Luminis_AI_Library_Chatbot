@@ -61,7 +61,12 @@ def run_python_tests():
     print("=" * 50)
 
     # Find test files
-    test_files = ["tests/test_basic.py", "tests/test_backend.py", "tests/test_frontend.py", "tests/test_integration.py"]
+    test_files = [
+        "tests/test_basic.py",
+        "tests/test_backend.py",
+        "tests/test_frontend.py",
+        "tests/test_integration.py",
+    ]
 
     # Run each test file separately
     for test_file in test_files:
@@ -111,7 +116,12 @@ def run_node_tests():
                 import shutil
 
                 if shutil.which("npm"):
-                    result = subprocess.run(["npm", "test"], capture_output=True, text=True, cwd=frontend_dir)
+                    result = subprocess.run(
+                        ["npm", "test"],
+                        capture_output=True,
+                        text=True,
+                        cwd=frontend_dir,
+                    )
 
                     if result.returncode == 0:
                         print("OK: npm test completed successfully")
@@ -120,13 +130,20 @@ def run_node_tests():
                         print(f"Stdout: {result.stdout}")
                         print(f"Stderr: {result.stderr}")
                 else:
-                    print("WARNING: npm not found - test script exists but cannot be run")
+                    print(
+                        "WARNING: npm not found - test script exists but cannot be run"
+                    )
             else:
                 print("WARNING: test script not found in package.json")
 
         except Exception as e:
-            if "Sistem belirtilen dosyayı bulamıyor" in str(e) or "not found" in str(e).lower():
-                print("WARNING: npm not found in PATH - test script exists but cannot be run")
+            if (
+                "Sistem belirtilen dosyayı bulamıyor" in str(e)
+                or "not found" in str(e).lower()
+            ):
+                print(
+                    "WARNING: npm not found in PATH - test script exists but cannot be run"
+                )
             else:
                 print(f"ERROR: package.json could not be tested: {e}")
     else:
@@ -236,7 +253,12 @@ def run_build_tests():
         import shutil
 
         if shutil.which("npx"):
-            result = subprocess.run(["npx", "tsc", "--noEmit"], capture_output=True, text=True, cwd=frontend_dir)
+            result = subprocess.run(
+                ["npx", "tsc", "--noEmit"],
+                capture_output=True,
+                text=True,
+                cwd=frontend_dir,
+            )
             if result.returncode == 0:
                 print("✅ No TypeScript compilation errors")
             else:
@@ -245,7 +267,10 @@ def run_build_tests():
         else:
             print("⚠️  npx not found - TypeScript compilation test skipped")
     except Exception as e:
-        if "Sistem belirtilen dosyayı bulamıyor" in str(e) or "not found" in str(e).lower():
+        if (
+            "Sistem belirtilen dosyayı bulamıyor" in str(e)
+            or "not found" in str(e).lower()
+        ):
             print("⚠️  npx not found in PATH - TypeScript compilation test skipped")
         else:
             print(f"⚠️  TypeScript compilation test could not be performed: {e}")
@@ -257,7 +282,12 @@ def run_build_tests():
         import shutil
 
         if shutil.which("npm"):
-            result = subprocess.run(["npm", "run", "build"], capture_output=True, text=True, cwd=frontend_dir)
+            result = subprocess.run(
+                ["npm", "run", "build"],
+                capture_output=True,
+                text=True,
+                cwd=frontend_dir,
+            )
             if result.returncode == 0:
                 print("✅ Vite build successful")
             else:
@@ -266,7 +296,10 @@ def run_build_tests():
         else:
             print("⚠️  npm not found - Vite build test skipped")
     except Exception as e:
-        if "Sistem belirtilen dosyayı bulamıyor" in str(e) or "not found" in str(e).lower():
+        if (
+            "Sistem belirtilen dosyayı bulamıyor" in str(e)
+            or "not found" in str(e).lower()
+        ):
             print("⚠️  npm not found in PATH - Vite build test skipped")
         else:
             print(f"⚠️  Vite build test could not be performed: {e}")

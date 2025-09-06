@@ -99,7 +99,10 @@ class TestProjectIntegration(unittest.TestCase):
 
         for config_file in config_files:
             file_path = os.path.join(self.project_root, config_file)
-            self.assertTrue(os.path.exists(file_path), f"Konfigürasyon dosyası bulunamadı: {config_file}")
+            self.assertTrue(
+                os.path.exists(file_path),
+                f"Konfigürasyon dosyası bulunamadı: {config_file}",
+            )
 
     def test_docker_configuration(self):
         """Tests Docker configuration"""
@@ -112,7 +115,9 @@ class TestProjectIntegration(unittest.TestCase):
 
         for docker_file in docker_files:
             file_path = os.path.join(self.project_root, docker_file)
-            self.assertTrue(os.path.exists(file_path), f"Docker dosyası bulunamadı: {docker_file}")
+            self.assertTrue(
+                os.path.exists(file_path), f"Docker dosyası bulunamadı: {docker_file}"
+            )
 
     def test_documentation_files(self):
         """Tests the existence of documentation files"""
@@ -127,7 +132,10 @@ class TestProjectIntegration(unittest.TestCase):
 
         for doc_file in doc_files:
             file_path = os.path.join(self.project_root, doc_file)
-            self.assertTrue(os.path.exists(file_path), f"Dokümantasyon dosyası bulunamadı: {doc_file}")
+            self.assertTrue(
+                os.path.exists(file_path),
+                f"Dokümantasyon dosyası bulunamadı: {doc_file}",
+            )
 
 
 class TestBackendIntegration(unittest.TestCase):
@@ -141,7 +149,9 @@ class TestBackendIntegration(unittest.TestCase):
         """Tests that Python dependencies are in requirements.txt"""
         requirements_path = os.path.join(self.project_root, "requirements.txt")
 
-        self.assertTrue(os.path.exists(requirements_path), "requirements.txt bulunamadı")
+        self.assertTrue(
+            os.path.exists(requirements_path), "requirements.txt bulunamadı"
+        )
 
         try:
             # Binary olarak oku ve decode et
@@ -167,13 +177,21 @@ class TestBackendIntegration(unittest.TestCase):
                             continue
 
                     if requirements is None:
-                        self.fail("requirements.txt hiçbir encoding ile decode edilemedi")
+                        self.fail(
+                            "requirements.txt hiçbir encoding ile decode edilemedi"
+                        )
 
             except Exception as e:
                 self.fail(f"requirements.txt okunamadı: {e}")
 
             # Temel bağımlılıkları kontrol et (case-insensitive)
-            required_packages = ["fastapi", "uvicorn", "sqlalchemy", "openai", "python-dotenv"]
+            required_packages = [
+                "fastapi",
+                "uvicorn",
+                "sqlalchemy",
+                "openai",
+                "python-dotenv",
+            ]
 
             for package in required_packages:
                 # Case-insensitive arama yap
@@ -189,7 +207,9 @@ class TestBackendIntegration(unittest.TestCase):
         """Database entegrasyonunu test eder"""
         try:
             # Add src directory to path for imports
-            src_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
+            src_path = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"
+            )
             if src_path not in sys.path:
                 sys.path.insert(0, src_path)
 
@@ -208,7 +228,9 @@ class TestBackendIntegration(unittest.TestCase):
 
                     database_path = os.path.join(src_path, "database", "database.py")
                     if os.path.exists(database_path):
-                        spec = importlib.util.spec_from_file_location("database", database_path)
+                        spec = importlib.util.spec_from_file_location(
+                            "database", database_path
+                        )
                         database_module = importlib.util.module_from_spec(spec)
                         spec.loader.exec_module(database_module)
                         engine = database_module.engine
@@ -226,7 +248,9 @@ class TestBackendIntegration(unittest.TestCase):
                     create_tables()
                     self.assertTrue(True, "Tablolar başarıyla oluşturuldu")
                 except Exception as e:
-                    print(f"WARNING: Tablo oluşturma hatası (test ortamında normal): {e}")
+                    print(
+                        f"WARNING: Tablo oluşturma hatası (test ortamında normal): {e}"
+                    )
 
         except Exception as e:
             self.skipTest(f"Database entegrasyonu test edilemedi: {e}")
@@ -246,8 +270,13 @@ class TestBackendIntegration(unittest.TestCase):
             print("OK: Vector servis modülü import edilebilir")
 
             # Servislerin varlığını kontrol et (API key olmadan)
-            self.assertTrue(hasattr(rag_service, "RAGService"), "RAGService sınıfı bulunamadı")
-            self.assertTrue(hasattr(vector_service, "VectorService"), "VectorService sınıfı bulunamadı")
+            self.assertTrue(
+                hasattr(rag_service, "RAGService"), "RAGService sınıfı bulunamadı"
+            )
+            self.assertTrue(
+                hasattr(vector_service, "VectorService"),
+                "VectorService sınıfı bulunamadı",
+            )
 
         except ImportError as e:
             print(f"WARNING: Servis modülleri import edilemedi: {e}")
@@ -272,7 +301,9 @@ class TestFrontendIntegration(unittest.TestCase):
         node_modules_path = os.path.join(self.project_root, "node_modules")
 
         # package-lock.json'ın varlığını kontrol et
-        self.assertTrue(os.path.exists(package_lock_path), "package-lock.json bulunamadı")
+        self.assertTrue(
+            os.path.exists(package_lock_path), "package-lock.json bulunamadı"
+        )
 
         # node_modules'ın varlığını kontrol et (opsiyonel)
         if os.path.exists(node_modules_path):
@@ -284,7 +315,9 @@ class TestFrontendIntegration(unittest.TestCase):
         """TypeScript derleme testini yapar"""
         try:
             # TypeScript konfigürasyonunu kontrol et (frontend dizininde)
-            tsconfig_path = os.path.join(self.project_root, "src", "frontend", "tsconfig.json")
+            tsconfig_path = os.path.join(
+                self.project_root, "src", "frontend", "tsconfig.json"
+            )
 
             # Dosya içeriğini string olarak oku
             with open(tsconfig_path, "r", encoding="utf-8") as f:
@@ -302,14 +335,18 @@ class TestFrontendIntegration(unittest.TestCase):
         """Vite entegrasyonunu test eder"""
         try:
             # Vite konfigürasyonunu kontrol et
-            vite_config_path = os.path.join(self.project_root, "src", "frontend", "vite.config.ts")
+            vite_config_path = os.path.join(
+                self.project_root, "src", "frontend", "vite.config.ts"
+            )
 
             if os.path.exists(vite_config_path):
                 with open(vite_config_path, "r", encoding="utf-8") as f:
                     config_content = f.read()
 
                 # React plugin'inin varlığını kontrol et
-                self.assertIn("@vitejs/plugin-react", config_content, "React plugin bulunamadı")
+                self.assertIn(
+                    "@vitejs/plugin-react", config_content, "React plugin bulunamadı"
+                )
 
         except Exception as e:
             print(f"⚠️  Vite konfigürasyonu test edilemedi: {e}")
@@ -326,7 +363,9 @@ class TestDeploymentIntegration(unittest.TestCase):
         """Tests Docker Compose configuration"""
         docker_compose_path = os.path.join(self.project_root, "docker-compose.yml")
 
-        self.assertTrue(os.path.exists(docker_compose_path), "docker-compose.yml bulunamadı")
+        self.assertTrue(
+            os.path.exists(docker_compose_path), "docker-compose.yml bulunamadı"
+        )
 
         try:
             with open(docker_compose_path, "r", encoding="utf-8") as f:
@@ -335,7 +374,9 @@ class TestDeploymentIntegration(unittest.TestCase):
             # Temel servislerin varlığını kontrol et
             required_services = ["app", "frontend"]
             for service in required_services:
-                self.assertIn(service, compose_content, f"Docker servis {service} bulunamadı")
+                self.assertIn(
+                    service, compose_content, f"Docker servis {service} bulunamadı"
+                )
 
         except Exception as e:
             self.fail(f"Docker Compose test edilemedi: {e}")

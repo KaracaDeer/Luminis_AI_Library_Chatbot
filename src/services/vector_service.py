@@ -88,7 +88,9 @@ load_dotenv()
 class VectorService:
     def __init__(self):
         """Initialize vector service with ChromaDB"""
-        self.embeddings = OpenAIEmbeddings(openai_api_key=os.getenv("OPENAI_API_KEY"), model="text-embedding-ada-002")
+        self.embeddings = OpenAIEmbeddings(
+            openai_api_key=os.getenv("OPENAI_API_KEY"), model="text-embedding-ada-002"
+        )
 
         self.vector_store = None
         self.persist_directory = "./chroma_db"
@@ -297,7 +299,9 @@ class VectorService:
 
         return "\n".join(content_parts)
 
-    def semantic_search(self, query: str, limit: int = 10, threshold: float = 0.7) -> List[Dict[str, Any]]:
+    def semantic_search(
+        self, query: str, limit: int = 10, threshold: float = 0.7
+    ) -> List[Dict[str, Any]]:
         """Advanced semantic search with similarity threshold"""
         try:
             # Search with similarity search
@@ -312,12 +316,15 @@ class VectorService:
                             "title": doc.metadata.get("title"),
                             "author": doc.metadata.get("author"),
                             "category": doc.metadata.get("category"),
-                            "description": doc.page_content.split("Açıklama: ")[1].split("\n")[0]
+                            "description": doc.page_content.split("Açıklama: ")[
+                                1
+                            ].split("\n")[0]
                             if "Açıklama: " in doc.page_content
                             else "",
                             "year": doc.metadata.get("year"),
                             "rating": doc.metadata.get("rating"),
-                            "similarity_score": 1 - score,  # Convert to similarity score
+                            "similarity_score": 1
+                            - score,  # Convert to similarity score
                             "book_id": doc.metadata.get("book_id"),
                         }
                     )
@@ -331,7 +338,9 @@ class VectorService:
             print(f"Error in semantic search: {e}")
             return []
 
-    def find_similar_books(self, book_title: str, limit: int = 5) -> List[Dict[str, Any]]:
+    def find_similar_books(
+        self, book_title: str, limit: int = 5
+    ) -> List[Dict[str, Any]]:
         """Find books similar to a given book"""
         try:
             # First, find the book in our database
@@ -345,7 +354,9 @@ class VectorService:
             query = f"{book.title} {book.author} {book.category} {book.description}"
 
             # Search for similar books
-            similar_books = self.semantic_search(query, limit=limit + 1)  # +1 to exclude the book itself
+            similar_books = self.semantic_search(
+                query, limit=limit + 1
+            )  # +1 to exclude the book itself
 
             # Filter out the book itself
             results = [book for book in similar_books if book["title"] != book_title]
@@ -358,7 +369,9 @@ class VectorService:
         finally:
             db.close()
 
-    def get_category_recommendations(self, category: str, limit: int = 10) -> List[Dict[str, Any]]:
+    def get_category_recommendations(
+        self, category: str, limit: int = 10
+    ) -> List[Dict[str, Any]]:
         """Get book recommendations by category"""
         try:
             query = f"Kategori: {category}"

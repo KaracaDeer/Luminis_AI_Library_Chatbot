@@ -52,7 +52,9 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 def setup_import_paths():
     """Helper function to setup import paths for tests"""
     # Add src directory to path for imports
-    src_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src")
+    src_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"
+    )
     if src_path not in sys.path:
         sys.path.insert(0, src_path)
     return src_path
@@ -103,7 +105,9 @@ class TestBackendServices(unittest.TestCase):
 
                     database_path = os.path.join(src_path, "database", "database.py")
                     if os.path.exists(database_path):
-                        spec = importlib.util.spec_from_file_location("database", database_path)
+                        spec = importlib.util.spec_from_file_location(
+                            "database", database_path
+                        )
                         database_module = importlib.util.module_from_spec(spec)
                         spec.loader.exec_module(database_module)
                         get_db = database_module.get_db
@@ -118,7 +122,9 @@ class TestBackendServices(unittest.TestCase):
         if success:
             self.assertTrue(True, "Database modules imported successfully")
         else:
-            self.skipTest(f"Database module not available in test environment. {error_msg}")
+            self.skipTest(
+                f"Database module not available in test environment. {error_msg}"
+            )
 
     def test_rag_service_imports(self):
         """Tests if RAG service modules can be imported"""
@@ -229,7 +235,9 @@ class TestDatabaseOperations(unittest.TestCase):
 
                     database_path = os.path.join(src_path, "database", "database.py")
                     if os.path.exists(database_path):
-                        spec = importlib.util.spec_from_file_location("database", database_path)
+                        spec = importlib.util.spec_from_file_location(
+                            "database", database_path
+                        )
                         database_module = importlib.util.module_from_spec(spec)
                         spec.loader.exec_module(database_module)
                         engine = database_module.engine
@@ -249,7 +257,9 @@ class TestDatabaseOperations(unittest.TestCase):
             BOOKS_DATABASE = main_module.BOOKS_DATABASE
 
             # Check if BOOKS_DATABASE is a list
-            self.assertIsInstance(BOOKS_DATABASE, list, "BOOKS_DATABASE should be a list")
+            self.assertIsInstance(
+                BOOKS_DATABASE, list, "BOOKS_DATABASE should be a list"
+            )
 
             if BOOKS_DATABASE:
                 # Check if first book has required fields

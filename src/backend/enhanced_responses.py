@@ -124,7 +124,9 @@ class EnhancedResponseManager:
             },
         }
 
-    def get_contextual_response(self, user_message: str, user_language: str = "tr", context: str = None) -> str:
+    def get_contextual_response(
+        self, user_message: str, user_language: str = "tr", context: str = None
+    ) -> str:
         """Get a contextual response based on user message and conversation context"""
 
         message_lower = user_message.lower()
@@ -166,11 +168,27 @@ class EnhancedResponseManager:
                 "en": ["novel", "fiction", "story", "narrative"],
             },
             "bilim kurgu": {
-                "tr": ["bilim kurgu", "science fiction", "sci-fi", "uzay", "space", "gelecek", "future"],
+                "tr": [
+                    "bilim kurgu",
+                    "science fiction",
+                    "sci-fi",
+                    "uzay",
+                    "space",
+                    "gelecek",
+                    "future",
+                ],
                 "en": ["science fiction", "sci-fi", "space", "future", "technology"],
             },
             "fantastik": {
-                "tr": ["fantastik", "fantasy", "büyü", "magic", "sihir", "elf", "dragon"],
+                "tr": [
+                    "fantastik",
+                    "fantasy",
+                    "büyü",
+                    "magic",
+                    "sihir",
+                    "elf",
+                    "dragon",
+                ],
                 "en": ["fantasy", "magic", "magical", "elf", "dragon", "wizard"],
             },
             "klasik": {
@@ -178,31 +196,95 @@ class EnhancedResponseManager:
                 "en": ["classic", "classical", "old", "traditional", "timeless"],
             },
             "polisiye": {
-                "tr": ["polisiye", "detective", "cinayet", "murder", "gizem", "mystery", "dedektif"],
+                "tr": [
+                    "polisiye",
+                    "detective",
+                    "cinayet",
+                    "murder",
+                    "gizem",
+                    "mystery",
+                    "dedektif",
+                ],
                 "en": ["detective", "mystery", "crime", "murder", "investigation"],
             },
             "tarih": {
-                "tr": ["tarih", "history", "historical", "geçmiş", "past", "savaş", "war"],
+                "tr": [
+                    "tarih",
+                    "history",
+                    "historical",
+                    "geçmiş",
+                    "past",
+                    "savaş",
+                    "war",
+                ],
                 "en": ["history", "historical", "past", "war", "ancient", "medieval"],
             },
             "felsefe": {
-                "tr": ["felsefe", "philosophy", "düşünce", "thought", "mantık", "logic"],
+                "tr": [
+                    "felsefe",
+                    "philosophy",
+                    "düşünce",
+                    "thought",
+                    "mantık",
+                    "logic",
+                ],
                 "en": ["philosophy", "philosophical", "thought", "logic", "ethics"],
             },
             "psikoloji": {
-                "tr": ["psikoloji", "psychology", "ruh", "soul", "karakter", "character", "davranış", "behavior"],
+                "tr": [
+                    "psikoloji",
+                    "psychology",
+                    "ruh",
+                    "soul",
+                    "karakter",
+                    "character",
+                    "davranış",
+                    "behavior",
+                ],
                 "en": ["psychology", "psychological", "behavior", "mind", "mental"],
             },
             "teknoloji": {
-                "tr": ["teknoloji", "technology", "tech", "dijital", "digital", "yapay zeka", "ai"],
-                "en": ["technology", "tech", "digital", "artificial intelligence", "ai"],
+                "tr": [
+                    "teknoloji",
+                    "technology",
+                    "tech",
+                    "dijital",
+                    "digital",
+                    "yapay zeka",
+                    "ai",
+                ],
+                "en": [
+                    "technology",
+                    "tech",
+                    "digital",
+                    "artificial intelligence",
+                    "ai",
+                ],
             },
             "sanat": {
-                "tr": ["sanat", "art", "resim", "painting", "müzik", "music", "heykel", "sculpture"],
+                "tr": [
+                    "sanat",
+                    "art",
+                    "resim",
+                    "painting",
+                    "müzik",
+                    "music",
+                    "heykel",
+                    "sculpture",
+                ],
                 "en": ["art", "artistic", "painting", "music", "sculpture", "creative"],
             },
             "doğa": {
-                "tr": ["doğa", "nature", "çevre", "environment", "orman", "forest", "deniz", "sea"],
+                "tr": [
+                    "doğa",
+                    "nature",
+                    "çevre",
+                    "environment",
+                    "orman",
+                    "forest",
+                    "deniz",
+                    "sea",
+                ],
                 "en": ["nature", "natural", "environment", "forest", "sea", "wildlife"],
             },
             "aşk": {
@@ -210,7 +292,14 @@ class EnhancedResponseManager:
                 "en": ["love", "romance", "romantic", "heart", "relationship"],
             },
             "macera": {
-                "tr": ["macera", "adventure", "keşif", "exploration", "heyecan", "excitement"],
+                "tr": [
+                    "macera",
+                    "adventure",
+                    "keşif",
+                    "exploration",
+                    "heyecan",
+                    "excitement",
+                ],
                 "en": ["adventure", "exploration", "journey", "quest", "expedition"],
             },
             "gizem": {
@@ -303,9 +392,7 @@ class EnhancedResponseManager:
                 else:
                     # Generic genre response
                     if language == "tr":
-                        return (
-                            f"{genre.title()} türünde size yardımcı olabilirim! Hangi türde {genre} kitabı arıyorsunuz?"
-                        )
+                        return f"{genre.title()} türünde size yardımcı olabilirim! Hangi türde {genre} kitabı arıyorsunuz?"
                     else:
                         return f"I can help you with {genre}! What type of {genre} book are you looking for?"
 
@@ -315,7 +402,14 @@ class EnhancedResponseManager:
         """Check if message is a greeting"""
         greetings = {
             "tr": ["merhaba", "selam", "hi", "hello", "hey", "günaydın", "iyi günler"],
-            "en": ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"],
+            "en": [
+                "hello",
+                "hi",
+                "hey",
+                "good morning",
+                "good afternoon",
+                "good evening",
+            ],
         }
         return any(greeting in message for greeting in greetings[language])
 
@@ -323,7 +417,14 @@ class EnhancedResponseManager:
         """Check if message is requesting book recommendations"""
         book_keywords = {
             "tr": ["kitap", "roman", "öneri", "tavsiye", "ne okuyayım", "hangi kitap"],
-            "en": ["book", "novel", "recommendation", "suggestion", "what should i read", "which book"],
+            "en": [
+                "book",
+                "novel",
+                "recommendation",
+                "suggestion",
+                "what should i read",
+                "which book",
+            ],
         }
         return any(keyword in message for keyword in book_keywords[language])
 
@@ -369,7 +470,10 @@ class EnhancedResponseManager:
                 "tr": ["yaz", "sıcak", "güneş", "tatil", "deniz"],
                 "en": ["summer", "hot", "sun", "vacation", "sea"],
             },
-            "winter": {"tr": ["kış", "soğuk", "kar", "snow", "ısıtıcı"], "en": ["winter", "cold", "snow", "heater"]},
+            "winter": {
+                "tr": ["kış", "soğuk", "kar", "snow", "ısıtıcı"],
+                "en": ["winter", "cold", "snow", "heater"],
+            },
             "spring": {
                 "tr": ["ilkbahar", "bahar", "çiçek", "yeşil", "taze"],
                 "en": ["spring", "flower", "green", "fresh"],
@@ -447,7 +551,9 @@ class EnhancedResponseManager:
 
         return seasonal_responses.get(season, {}).get(language, "")
 
-    def _get_default_contextual_response(self, language: str, context: str = None) -> str:
+    def _get_default_contextual_response(
+        self, language: str, context: str = None
+    ) -> str:
         """Get a default contextual response"""
         default_responses = {
             "tr": [

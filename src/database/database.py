@@ -11,7 +11,9 @@ SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./luminis_library
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL,
-    connect_args={"check_same_thread": False} if SQLALCHEMY_DATABASE_URL.startswith("sqlite") else {},
+    connect_args={"check_same_thread": False}
+    if SQLALCHEMY_DATABASE_URL.startswith("sqlite")
+    else {},
 )
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
@@ -101,7 +103,17 @@ This module is essential for:
 - Application state management
 """
 
-from sqlalchemy import create_engine, Column, Integer, String, Text, DateTime, ForeignKey, Enum, Float
+from sqlalchemy import (
+    create_engine,
+    Column,
+    Integer,
+    String,
+    Text,
+    DateTime,
+    ForeignKey,
+    Enum,
+    Float,
+)
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
 from datetime import datetime
@@ -113,19 +125,21 @@ import enum
 load_dotenv()
 
 # Database configuration
-DATABASE_URL = os.getenv('DATABASE_URL', 'sqlite:///./luminis_library.db')  # Use SQLite for testing
+DATABASE_URL = os.getenv(
+    "DATABASE_URL", "sqlite:///./luminis_library.db"
+)  # Use SQLite for testing
 
 # For Docker container, use absolute path
-if os.path.exists('/app/luminis_library.db'):
-    DATABASE_URL = 'sqlite:////app/luminis_library.db'
+if os.path.exists("/app/luminis_library.db"):
+    DATABASE_URL = "sqlite:////app/luminis_library.db"
     print(f"DEBUG: Using Docker database path: {DATABASE_URL}")
 else:
     print(f"DEBUG: Using local database path: {DATABASE_URL}")
 
 # Force SQLite for development
-if 'mysql' in DATABASE_URL.lower():
+if "mysql" in DATABASE_URL.lower():
     print("WARNING: MySQL detected, switching to SQLite for development")
-    DATABASE_URL = 'sqlite:///./luminis_library.db'
+    DATABASE_URL = "sqlite:///./luminis_library.db"
 
 # Create SQLAlchemy engine
 engine = create_engine(DATABASE_URL, echo=True)
@@ -155,7 +169,9 @@ class User(Base):
     profile_photo = Column(String(255), nullable=True)
     is_active = Column(Integer, default=1)  # 1 for active, 0 for inactive
     is_verified = Column(Integer, default=0)  # 1 for verified, 0 for unverified
-    auth_provider = Column(String(20), nullable=True)  # "local", "google", "github", "microsoft"
+    auth_provider = Column(
+        String(20), nullable=True
+    )  # "local", "google", "github", "microsoft"
     auth_provider_id = Column(String(100), nullable=True)  # ID from OAuth provider
     last_login = Column(DateTime, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)

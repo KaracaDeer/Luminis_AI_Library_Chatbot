@@ -134,14 +134,14 @@ def demonstrate_api_endpoints():
     print("1. Health Check:")
     health = client.health_check()
     print(f"   Status: {'✅ Healthy' if 'error' not in health else '❌ Error'}")
-    if 'error' not in health:
+    if "error" not in health:
         print(f"   Response: {health}")
     print()
 
     # 2. API Status
     print("2. API Status:")
     status = client.get_status()
-    if 'error' not in status:
+    if "error" not in status:
         print(f"   Version: {status.get('version', 'Unknown')}")
         print(f"   Environment: {status.get('environment', 'Unknown')}")
         print(f"   Uptime: {status.get('uptime', 'Unknown')}")
@@ -151,10 +151,14 @@ def demonstrate_api_endpoints():
 
     # 3. User Registration (Example)
     print("3. User Registration (Example):")
-    register_data = {"username": "testuser", "email": "test@example.com", "password": "testpassword123"}
+    register_data = {
+        "username": "testuser",
+        "email": "test@example.com",
+        "password": "testpassword123",
+    }
     # Note: This would fail if user already exists, which is expected
     register_response = client.register_user(**register_data)
-    if 'error' in register_response:
+    if "error" in register_response:
         print(f"   Expected error (user may exist): {register_response['error']}")
     else:
         print(f"   ✅ User registered: {register_response}")
@@ -163,11 +167,13 @@ def demonstrate_api_endpoints():
     # 4. Book Search
     print("4. Book Search:")
     search_results = client.search_books("Python programming", limit=3)
-    if 'error' not in search_results:
-        books = search_results.get('books', [])
+    if "error" not in search_results:
+        books = search_results.get("books", [])
         print(f"   Found {len(books)} books:")
         for book in books:
-            print(f"   • {book.get('title', 'Unknown')} by {book.get('author', 'Unknown')}")
+            print(
+                f"   • {book.get('title', 'Unknown')} by {book.get('author', 'Unknown')}"
+            )
     else:
         print(f"   Error: {search_results['error']}")
     print()
@@ -175,11 +181,13 @@ def demonstrate_api_endpoints():
     # 5. Popular Books
     print("5. Popular Books:")
     popular = client.get_popular_books(limit=3)
-    if 'error' not in popular:
-        books = popular.get('books', [])
+    if "error" not in popular:
+        books = popular.get("books", [])
         print(f"   Found {len(books)} popular books:")
         for book in books:
-            print(f"   • {book.get('title', 'Unknown')} by {book.get('author', 'Unknown')}")
+            print(
+                f"   • {book.get('title', 'Unknown')} by {book.get('author', 'Unknown')}"
+            )
     else:
         print(f"   Error: {popular['error']}")
     print()
@@ -187,8 +195,8 @@ def demonstrate_api_endpoints():
     # 6. Chat Message
     print("6. Chat Message:")
     chat_response = client.send_chat_message("Hello! Can you recommend a good book?")
-    if 'error' not in chat_response:
-        response_text = chat_response.get('response', 'No response')
+    if "error" not in chat_response:
+        response_text = chat_response.get("response", "No response")
         print(f"   AI Response: {response_text[:100]}...")
     else:
         print(f"   Error: {chat_response['error']}")
@@ -206,7 +214,7 @@ def demonstrate_authentication_flow():
     # 1. Try to login (this will likely fail without valid credentials)
     print("1. Login Attempt:")
     login_response = client.login_user("testuser", "testpassword123")
-    if 'error' in login_response:
+    if "error" in login_response:
         print(f"   Expected error (invalid credentials): {login_response['error']}")
     else:
         print(f"   ✅ Login successful: {login_response.get('message', 'Success')}")
@@ -216,7 +224,7 @@ def demonstrate_authentication_flow():
     # 2. Try to get profile (will fail without authentication)
     print("2. Profile Access (without auth):")
     profile = client.get_user_profile()
-    if 'error' in profile:
+    if "error" in profile:
         print(f"   Expected error (not authenticated): {profile['error']}")
     else:
         print(f"   Profile: {profile}")

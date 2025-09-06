@@ -30,7 +30,9 @@ def check_database_connection():
         print("3. Ensure the database 'luminis_library' exists")
         print("\n📝 To create the database manually:")
         print("mysql -u root -p")
-        print("CREATE DATABASE luminis_library CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+        print(
+            "CREATE DATABASE luminis_library CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+        )
         return False
 
 

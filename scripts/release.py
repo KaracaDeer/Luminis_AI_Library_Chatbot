@@ -40,7 +40,7 @@ def get_current_version():
 def update_version_file(new_version):
     """Update VERSION file"""
     version_file = PROJECT_ROOT / "VERSION"
-    version_file.write_text(f"{new_version}\n", encoding='utf-8')
+    version_file.write_text(f"{new_version}\n", encoding="utf-8")
     print(f"✅ Updated VERSION file: {new_version}")
 
 
@@ -51,26 +51,32 @@ def update_python_version(new_version):
         content = version_file.read_text()
 
         # Update version string
-        content = re.sub(r'__version__ = "[^"]*"', f'__version__ = "{new_version}"', content)
+        content = re.sub(
+            r'__version__ = "[^"]*"', f'__version__ = "{new_version}"', content
+        )
 
         # Update version info tuple
-        version_parts = new_version.split('.')
+        version_parts = new_version.split(".")
         version_tuple = f"({version_parts[0]}, {version_parts[1]}, {version_parts[2]})"
-        content = re.sub(r'__version_info__ = \([^)]*\)', f'__version_info__ = {version_tuple}', content)
+        content = re.sub(
+            r"__version_info__ = \([^)]*\)",
+            f"__version_info__ = {version_tuple}",
+            content,
+        )
 
-        version_file.write_text(content, encoding='utf-8')
+        version_file.write_text(content, encoding="utf-8")
         print(f"✅ Updated Python version file: {new_version}")
 
 
 def update_package_json(new_version, file_path):
     """Update package.json version"""
     if file_path.exists():
-        with open(file_path, 'r') as f:
+        with open(file_path, "r") as f:
             data = json.load(f)
 
-        data['version'] = new_version
+        data["version"] = new_version
 
-        with open(file_path, 'w') as f:
+        with open(file_path, "w") as f:
             json.dump(data, f, indent=2)
 
         print(f"✅ Updated {file_path.name}: {new_version}")
@@ -95,17 +101,17 @@ def update_all_versions(new_version):
 
 def increment_version(current_version, increment_type):
     """Increment version based on type"""
-    parts = current_version.split('.')
+    parts = current_version.split(".")
     major, minor, patch = int(parts[0]), int(parts[1]), int(parts[2])
 
-    if increment_type == 'major':
+    if increment_type == "major":
         major += 1
         minor = 0
         patch = 0
-    elif increment_type == 'minor':
+    elif increment_type == "minor":
         minor += 1
         patch = 0
-    elif increment_type == 'patch':
+    elif increment_type == "patch":
         patch += 1
 
     return f"{major}.{minor}.{patch}"
@@ -121,10 +127,18 @@ def create_git_tag(version, message=None):
         subprocess.run(["git", "add", "."], check=True, cwd=PROJECT_ROOT)
 
         # Commit changes
-        subprocess.run(["git", "commit", "-m", f"chore: bump version to {version}"], check=True, cwd=PROJECT_ROOT)
+        subprocess.run(
+            ["git", "commit", "-m", f"chore: bump version to {version}"],
+            check=True,
+            cwd=PROJECT_ROOT,
+        )
 
         # Create tag
-        subprocess.run(["git", "tag", "-a", f"v{version}", "-m", message], check=True, cwd=PROJECT_ROOT)
+        subprocess.run(
+            ["git", "tag", "-a", f"v{version}", "-m", message],
+            check=True,
+            cwd=PROJECT_ROOT,
+        )
 
         print(f"✅ Created git tag v{version}")
         return True
@@ -198,14 +212,16 @@ Please report bugs via [GitHub Issues](https://github.com/KaracaDeer/Luminis_AI_
 """
 
     release_notes_file = PROJECT_ROOT / f"RELEASE_NOTES_v{version}.md"
-    release_notes_file.write_text(notes, encoding='utf-8')
+    release_notes_file.write_text(notes, encoding="utf-8")
     print(f"✅ Generated release notes: {release_notes_file.name}")
 
     return release_notes_file
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Release script for Luminis AI Library Assistant")
+    parser = argparse.ArgumentParser(
+        description="Release script for Luminis AI Library Assistant"
+    )
     parser.add_argument("--version", help="Specific version to release")
     parser.add_argument("--major", action="store_true", help="Increment major version")
     parser.add_argument("--minor", action="store_true", help="Increment minor version")
@@ -223,11 +239,11 @@ def main():
     if args.version:
         new_version = args.version
     elif args.major:
-        new_version = increment_version(current_version, 'major')
+        new_version = increment_version(current_version, "major")
     elif args.minor:
-        new_version = increment_version(current_version, 'minor')
+        new_version = increment_version(current_version, "minor")
     elif args.patch:
-        new_version = increment_version(current_version, 'patch')
+        new_version = increment_version(current_version, "patch")
     else:
         print("❌ Please specify version increment type or specific version")
         sys.exit(1)
