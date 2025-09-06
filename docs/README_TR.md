@@ -12,15 +12,7 @@
 
 ## 🚀 Canlı Demo
 
-**Frontend:** https://luminis-frontend.onrender.com
-
-**Backend API:** https://luminis-backend.onrender.com
-
-## 🔧 API Endpoint'leri
-
-- **Health Check:** https://luminis-backend.onrender.com/api/health
-- **Kitaplar:** https://luminis-backend.onrender.com/api/books
-- **Sohbet:** https://luminis-backend.onrender.com/api/chat
+https://luminis-frontend.onrender.com
 
 ## 🎯 Demo
 
