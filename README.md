@@ -12,15 +12,7 @@
 
 ## 🚀 Live Demo
 
-**Frontend:** https://luminis-frontend.onrender.com
-
-**Backend API:** https://luminis-backend.onrender.com
-
-## 🔧 API Endpoints
-
-- **Health Check:** https://luminis-backend.onrender.com/api/health
-- **Books:** https://luminis-backend.onrender.com/api/books
-- **Chat:** https://luminis-backend.onrender.com/api/chat
+https://luminis-frontend.onrender.com
 
 ## 🎯 Demo
 
