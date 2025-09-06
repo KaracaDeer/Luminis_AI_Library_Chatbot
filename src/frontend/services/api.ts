@@ -1,4 +1,7 @@
-const API_BASE_URL = '/api';
+// API URL configuration for different environments
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
 
 export interface ChatMessage {
   message: string;
@@ -32,7 +35,7 @@ export const sendChatMessage = async (message: string, language?: string): Promi
   try {
     console.log('Sending request to:', `${API_BASE_URL}/chat`);
     console.log('Request body:', { message, language });
-    
+
     const response = await fetch(`${API_BASE_URL}/chat`, {
       method: 'POST',
       headers: {
@@ -51,7 +54,7 @@ export const sendChatMessage = async (message: string, language?: string): Promi
     const data = await response.json();
     console.log('Response data:', data);
     console.log('Response keys:', Object.keys(data));
-    
+
     if (!data.success) {
       throw new Error(data.error || 'Chat mesajı gönderilemedi');
     }
@@ -83,7 +86,7 @@ export const getBookRecommendations = async (preferences: UserPreferences): Prom
     });
 
     const data = await response.json();
-    
+
     if (!data.success) {
       throw new Error(data.error || 'Kitap önerileri alınamadı');
     }
@@ -103,7 +106,7 @@ export const getAllBooks = async (): Promise<BookRecommendation[]> => {
   try {
     const response = await fetch(`${API_BASE_URL}/books`);
     const data = await response.json();
-    
+
     if (!data.success) {
       throw new Error(data.error || 'Kitaplar alınamadı');
     }
@@ -127,7 +130,7 @@ export const analyzeReadingList = async (readingList: BookRecommendation[]): Pro
     });
 
     const data = await response.json();
-    
+
     if (!data.success) {
       throw new Error(data.error || 'Okuma analizi yapılamadı');
     }
@@ -154,7 +157,7 @@ export const transcribeAudio = async (audioBlob: Blob): Promise<string> => {
     });
 
     const data = await response.json();
-    
+
     if (!data.success) {
       throw new Error(data.error || 'Ses-metin çevirisi başarısız');
     }

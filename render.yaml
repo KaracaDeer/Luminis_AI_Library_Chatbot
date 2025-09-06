@@ -1,0 +1,31 @@
+services:
+  # Backend API Service
+  - type: web
+    name: luminis-backend
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python render_start.py
+    rootDir: src/backend
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: DATABASE_URL
+        value: sqlite:///luminis_library.db
+      - key: ENVIRONMENT
+        value: production
+      - key: CORS_ORIGINS
+        value: https://luminis-frontend.onrender.com
+    healthCheckPath: /api/health
+
+  # Frontend Static Site
+  - type: static
+    name: luminis-frontend
+    buildCommand: cd src/frontend && npm install && npm run build
+    staticPublishPath: src/frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://luminis-backend.onrender.com
+      - key: VITE_APP_NAME
+        value: Luminis AI Library

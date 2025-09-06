@@ -1,18 +1,25 @@
+# Core FastAPI dependencies
 fastapi==0.104.1
-uvicorn==0.24.0
+uvicorn[standard]==0.24.0
+pydantic==2.4.2
+pydantic-core==2.10.1
+
+# OpenAI and AI
 openai>=1.6.1,<2.0.0
+
+# Environment and utilities
 python-dotenv==1.0.0
 requests==2.31.0
-pydantic==2.5.0
+python-multipart==0.0.6
+
 # Database dependencies
 sqlalchemy==2.0.23
-# mysqlclient==2.2.0  # Commented out for GitHub Actions compatibility
 alembic==1.13.1
-# LangChain and Vector DB
-langchain==0.1.0
-langchain-openai==0.0.2
-chromadb==0.4.22
-# Additional utilities
-python-multipart==0.0.6
-# Code formatting
-black==23.12.1
+
+# LangChain and Vector DB (simplified for Render)
+# langchain==0.1.0
+# langchain-openai==0.0.2
+# chromadb==0.4.22
+
+# Code formatting (optional for production)
+# black==23.12.1
