@@ -64,12 +64,23 @@ async def get_books():
 @app.post("/api/chat")
 async def chat(message: dict):
     """Simple chat endpoint"""
-    user_message = message.get("message", "")
+    try:
+        user_message = message.get("message", "")
 
-    # Simple response without OpenAI for now
-    response = f"Echo: {user_message}"
+        # Simple response without OpenAI for now
+        response = f"Echo: {user_message}"
 
-    return {"response": response, "status": "success"}
+        return {
+            "response": response,
+            "status": "success",
+            "timestamp": "2025-01-06T16:30:00Z",
+        }
+    except Exception as e:
+        return {
+            "response": f"Error: {str(e)}",
+            "status": "error",
+            "timestamp": "2025-01-06T16:30:00Z",
+        }
 
 
 if __name__ == "__main__":
