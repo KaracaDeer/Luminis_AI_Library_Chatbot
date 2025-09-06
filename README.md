@@ -10,6 +10,18 @@
 
 [🇹🇷 Turkish README](docs/README_TR.md)
 
+## 🚀 Live Demo
+
+**Frontend:** https://luminis-frontend.onrender.com
+
+**Backend API:** https://luminis-backend.onrender.com
+
+## 🔧 API Endpoints
+
+- **Health Check:** https://luminis-backend.onrender.com/api/health
+- **Books:** https://luminis-backend.onrender.com/api/books
+- **Chat:** https://luminis-backend.onrender.com/api/chat
+
 ## 🎯 Demo
 
 ![Luminis.AI Demo](docs/demo.gif)
@@ -156,7 +168,7 @@ Luminis_AI_Library_Chatbot/
 ## 🚀 Quick Start
 
 ### Requirements
-- **Node.js** 18+ 
+- **Node.js** 18+
 - **Python** 3.11+
 - **OpenAI API Key** for real AI functionality
 
@@ -172,7 +184,7 @@ Luminis_AI_Library_Chatbot/
    ```bash
    # Using Makefile (Recommended)
    make install
-   
+
    # Or manually
    npm install
    pip install -r requirements.txt
@@ -192,7 +204,7 @@ Luminis_AI_Library_Chatbot/
    make dev
    # or
    npm run dev
-   
+
    # Or separately:
    make backend     # Backend (port 5000)
    make frontend    # Frontend (port 5173)

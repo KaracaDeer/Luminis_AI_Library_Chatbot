@@ -10,6 +10,18 @@
 
 [🇺🇸 English README](README.md)
 
+## 🚀 Canlı Demo
+
+**Frontend:** https://luminis-frontend.onrender.com
+
+**Backend API:** https://luminis-backend.onrender.com
+
+## 🔧 API Endpoint'leri
+
+- **Health Check:** https://luminis-backend.onrender.com/api/health
+- **Kitaplar:** https://luminis-backend.onrender.com/api/books
+- **Sohbet:** https://luminis-backend.onrender.com/api/chat
+
 ## 🎯 Demo
 
 ![Luminis.AI Demo](docs/demo.gif)
@@ -60,7 +72,7 @@
 ## 🚀 Hızlı Başlangıç
 
 ### Gereksinimler
-- **Node.js** 18+ 
+- **Node.js** 18+
 - **Python** 3.11+
 - **OpenAI API Key** gerçek AI için
 
@@ -76,7 +88,7 @@
    ```bash
    # Node.js bağımlılıkları
    npm install
-   
+
    # Python bağımlılıkları
    pip install -r requirements.txt
    ```
@@ -93,7 +105,7 @@
     ```bash
     # Her iki sunucuyu da başlatın
     npm run dev
-    
+
          # Veya ayrı ayrı:
      npm run server    # Backend (port 8000)
      npm run client    # Frontend (port 5173)
@@ -122,7 +134,7 @@
    npm run build              # Frontend build
    npm run start              # Üretim sunucusunu başlat
    npm run install-deps       # Tüm bağımlılıkları yükle
-   
+
    # Docker
    docker-compose up -d
    ```

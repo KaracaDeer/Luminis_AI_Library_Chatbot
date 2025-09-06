@@ -51,27 +51,12 @@ export const sendChatMessage = async (message: string, language?: string): Promi
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
-    // Check if response has content
-    const responseText = await response.text();
-    console.log('Raw response:', responseText);
-
-    if (!responseText) {
-      throw new Error('Empty response from server');
-    }
-
-    let data;
-    try {
-      data = JSON.parse(responseText);
-    } catch (parseError) {
-      console.error('JSON parse error:', parseError);
-      throw new Error(`Invalid JSON response: ${responseText}`);
-    }
-
+    const data = await response.json();
     console.log('Response data:', data);
     console.log('Response keys:', Object.keys(data));
 
-    if (data.status === 'error') {
-      throw new Error(data.response || 'Chat mesajı gönderilemedi');
+    if (!data.success) {
+      throw new Error(data.error || 'Chat mesajı gönderilemedi');
     }
 
     return {

@@ -50,37 +50,38 @@ async def get_books():
                 "title": "The Great Gatsby",
                 "author": "F. Scott Fitzgerald",
                 "genre": "Fiction",
+                "description": "A classic American novel",
+                "rating": 4.5,
+                "year": 1925,
             },
             {
                 "id": 2,
                 "title": "1984",
                 "author": "George Orwell",
                 "genre": "Dystopian Fiction",
+                "description": "A dystopian social science fiction novel",
+                "rating": 4.7,
+                "year": 1949,
             },
-        ]
+        ],
+        "success": True,
     }
 
 
 @app.post("/api/chat")
 async def chat(message: dict):
     """Simple chat endpoint"""
-    try:
-        user_message = message.get("message", "")
+    user_message = message.get("message", "")
 
-        # Simple response without OpenAI for now
-        response = f"Echo: {user_message}"
+    # Simple response without OpenAI for now
+    response = f"Echo: {user_message}"
 
-        return {
-            "response": response,
-            "status": "success",
-            "timestamp": "2025-01-06T16:30:00Z",
-        }
-    except Exception as e:
-        return {
-            "response": f"Error: {str(e)}",
-            "status": "error",
-            "timestamp": "2025-01-06T16:30:00Z",
-        }
+    return {
+        "user_message": user_message,
+        "response": response,
+        "status": "success",
+        "success": True,
+    }
 
 
 if __name__ == "__main__":
