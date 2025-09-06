@@ -62,7 +62,9 @@ Thumbs.db
 *.d.ts
 *.d.ts.map
 *.js.map
-*.js
+# Keep config files but ignore compiled JS
+src/frontend/dist/*.js
+src/frontend/build/*.js
 
 # Logs
 logs
