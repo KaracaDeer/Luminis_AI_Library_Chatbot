@@ -33,7 +33,15 @@
     "start": "python -m uvicorn src.backend.main_minimal:app --reload --port 8000 --host 0.0.0.0",
     "db:init": "python src/database/init_database.py",
     "db:reset": "python src/database/init_database.py --reset",
-    "test": "python tests/run_all_tests.py"
+    "test": "python tests/run_comprehensive_tests.py",
+    "test:backend": "python tests/run_comprehensive_tests.py --backend-only",
+    "test:frontend": "python tests/run_comprehensive_tests.py --frontend-only",
+    "test:coverage": "python tests/run_comprehensive_tests.py --coverage",
+    "test:verbose": "python tests/run_comprehensive_tests.py --verbose",
+    "lint": "cd src/frontend && npm run lint",
+    "lint:fix": "cd src/frontend && npm run lint:fix",
+    "format": "cd src/frontend && npm run format",
+    "type-check": "cd src/frontend && npm run type-check"
   },
   "dependencies": {
     "@types/node": "^20.10.5",

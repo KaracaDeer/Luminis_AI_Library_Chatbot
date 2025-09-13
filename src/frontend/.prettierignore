@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Generated files
+*.d.ts
+*.d.ts.map
+*.js.map
+
+# Config files
+*.config.js
+*.config.ts
+vite.config.ts
+
+# Package files
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+
+# Environment files
+.env*
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Temporary files
+*.tmp
+*.temp

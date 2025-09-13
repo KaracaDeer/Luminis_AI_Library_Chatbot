@@ -6,6 +6,8 @@ __pycache__/
 *.pyd
 .Python
 env/
+venv/
+.venv/
 pip-log.txt
 pip-delete-this-directory.txt
 .tox/
@@ -20,6 +22,66 @@ coverage.xml
 .mypy_cache
 .pytest_cache/
 .hypothesis
+
+# Python virtual environments
+env/
+venv/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# pipenv
+Pipfile.lock
+
+# PEP 582
+__pypackages__/
+
+# Celery
+celerybeat-schedule
+celerybeat.pid
+
+# SageMath parsed files
+*.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Rope project settings
+.ropeproject
+
+# mkdocs documentation
+/site
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# pytype static type analyzer
+.pytype/
+
+# Cython debug symbols
+cython_debug/
 
 # Database files
 *.db
@@ -90,6 +152,21 @@ safety-report.json
 results.xml
 coverage.xml
 *.xml
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+coverage.json
+*.cover
+*.py,cover
+.hypothesis/
+
+# Test output files
+test-results/
+test-reports/
+junit.xml
+test-output.xml
 
 # Release notes (temporary files)
 RELEASE_NOTES_v*.md
@@ -98,6 +175,58 @@ RELEASE_NOTES_v*.md
 test.txt
 *.test
 *.spec
+
+# Frontend test outputs
+src/frontend/coverage/
+src/frontend/test-results/
+src/frontend/.nyc_output/
+
+# ESLint cache
+.eslintcache
+
+# Prettier cache
+.prettiercache
+
+# Stylelint cache
+.stylelintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
 
 # Database directories
 luminis_library.db/
