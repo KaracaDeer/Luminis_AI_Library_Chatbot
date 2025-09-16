@@ -192,7 +192,7 @@ JWT_SECRET_KEY=your_jwt_secret_key_here
 ### 💬 Support
 - **🐛 Issues**: [GitHub Issues](https://github.com/KaracaDeer/Luminis_AI_Library_Chatbot/issues)
 - **💭 Discussions**: [GitHub Discussions](https://github.com/KaracaDeer/Luminis_AI_Library_Chatbot/discussions)
-- **💼 LinkedIn**: [Fatma Karaca Erdogan](https://www.linkedin.com/in/fatma-karaca-erdogan-32201a378/)
+- **💼 LinkedIn**: [Fatma Karaca Erdogan](https://www.linkedin.com/in/fatma-erdogan-32201a378/)
 - **📧 Email**: fatmakaracaerdogan@gmail.com
 
 ## 📝 License
